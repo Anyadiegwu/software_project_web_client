@@ -17,7 +17,7 @@ const Navbar = () => (
       </ul>
     </div>
     <div className={styles.navRight}>
-      <a href="#" className={styles.navSignIn}>Sign In</a>
+      <a href="/select-role" className={styles.navSignIn}>Sign In</a>
       <a href="#" className={styles.navCta}>Get Started</a>
     </div>
   </nav>

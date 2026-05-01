@@ -1,0 +1,226 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #0b111b;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header Styles */
+.topHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #161c27; /* Darker header bar */
+  border-bottom: 1px solid #1f2937;
+  height: 64px;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoSquare {
+  background-color: #00e5b0;
+  color: #0b111b;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  border-radius: 4px;
+}
+
+.brandName {
+  color: #00e5b0;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+}
+
+.backLink {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: #ffffff;
+}
+
+.signUpBtn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #374151;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Layout and Form Styles */
+.mainLayout {
+  display: flex;
+  flex: 1;
+}
+
+.formSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.contentContainer {
+  width: 100%;
+  max-width: 460px;
+}
+
+.superTitle {
+  color: #9ca3af;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.mainTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.description {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+}
+
+.alertBox {
+  background-color: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.alertText strong {
+  display: block;
+  color: #00e5b0;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.alertText p {
+  color: #9ca3af;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #f3f4f6;
+}
+
+.required {
+  color: #00e5b0;
+}
+
+.inputWrapper {
+  background-color: #0b111b;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+}
+
+.inputWrapper:focus-within {
+  border-color: #00e5b0;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  color: white;
+  height: 44px;
+  flex: 1;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  font-size: 0.8rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.forgotLink {
+  color: #00e5b0;
+  text-decoration: none;
+}
+
+.submitBtn {
+  width: 100%;
+  background-color: #00e5b0;
+  color: #0b111b;
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.anonymousBtn {
+  width: 100%;
+  background-color: transparent;
+  color: #9ca3af;
+  border: 1px solid #1f2937;
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.formFooter {
+  text-align: center;
+  margin-top: 24px;
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.createLink {
+  color: #00e5b0;
+  text-decoration: none;
+  font-weight: 600;
+}

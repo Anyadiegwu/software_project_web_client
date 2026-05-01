@@ -1,0 +1,157 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to right, #020617, #020617);
+  color: #e5e7eb;
+  font-family: "Inter", sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-bottom: 1px solid #0f172a;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoBox {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #14b8a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-weight: bold;
+}
+
+.logo span {
+  color: #14b8a6;
+  letter-spacing: 2px;
+}
+
+.navCenter {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.signupBtn {
+  background: transparent;
+  border: 1px solid #1e293b;
+  padding: 8px 16px;
+  color: #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* CONTENT */
+.content {
+  display: flex;
+}
+
+/* RIGHT FORM */
+.formSection {
+  flex: 1;
+  padding: 60px 80px;
+}
+
+.signinLabel {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #64748b;
+}
+
+.title {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.subtitle {
+  color: #94a3b8;
+  margin-bottom: 30px;
+}
+
+/* INFO BOX */
+.infoBox {
+  display: flex;
+  gap: 10px;
+  background: rgba(20, 184, 166, 0.1);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+.lock {
+  color: #14b8a6;
+}
+
+/* FORM */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #1e293b;
+  background: #020617;
+  color: white;
+}
+
+.formExtras {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.forgot {
+  color: #14b8a6;
+  cursor: pointer;
+}
+
+/* BUTTONS */
+.primaryBtn {
+  width: 100%;
+  padding: 14px;
+  background: #14b8a6;
+  border: none;
+  border-radius: 6px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.secondaryBtn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  color: #94a3b8;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #64748b;
+}
+
+.footer span {
+  color: #14b8a6;
+}

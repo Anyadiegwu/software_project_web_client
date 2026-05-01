@@ -1,0 +1,56 @@
+.panel {
+  width: 420px;
+  padding: 60px 40px;
+  background: radial-gradient(circle at bottom, #0f172a, #020617);
+  border-right: 1px solid #0f172a;
+}
+
+.panel h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.desc {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* CARDS */
+.card {
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #020617;
+}
+
+.active {
+  border: 1px solid rgba(20, 184, 166, 0.5);
+  box-shadow: 0 0 25px rgba(20, 184, 166, 0.15);
+}
+
+.icon {
+  margin-bottom: 10px;
+}
+
+.tag {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #14b8a6;
+}
+
+.tagBlue {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #3b82f6;
+}
+
+.card h3 {
+  margin: 5px 0;
+}
+
+.card p {
+  font-size: 13px;
+  color: #94a3b8;
+}
