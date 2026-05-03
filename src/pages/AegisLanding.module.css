@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --bg-primary: #0a0f0e;
   --bg-secondary: #111816;
   --bg-card: #131a18;
@@ -17,7 +17,7 @@
 }
 
 /* ============================================================ ROOT */
-.root {
+/* .root {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-body);
@@ -25,7 +25,7 @@
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
-}
+}  */
 
 /* ============================================================ NAVBAR */
 .navbar {

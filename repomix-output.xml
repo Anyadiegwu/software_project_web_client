@@ -1,0 +1,3875 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitignore
+app.js
+extension.js
+index.html
+package.json
+README.md
+src/api/auth.js
+src/api/authService.js
+src/App.jsx
+src/context/AuthContext.jsx
+src/main.jsx
+src/pages/AegisLanding.module.css
+src/pages/AuthPage/OfficerAuthPage.jsx
+src/pages/AuthPage/OfficerLoginPage.module.css
+src/pages/AuthPage/OfficerRegistrationPage.jsx
+src/pages/AuthPage/OfficerRegistrationPage.module.css
+src/pages/AuthPage/ReporterAuthPage.jsx
+src/pages/AuthPage/ReporterAuthPage.module.css
+src/pages/AuthPage/ReporterRegisterPage.jsx
+src/pages/AuthPage/ReporterRegisterPage.module.css
+src/pages/AuthPage/RoleSelectPanel.jsx
+src/pages/AuthPage/RoleSelectPanel.module.css
+src/pages/Landing.jsx
+src/pages/RoleSelect.jsx
+src/pages/RoleSelect.module.css
+styles.css
+vite.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/api/auth.js">
+// const BASE_URL = "http://localhost:5000/api"; // change to your backend
+
+// export const registerReporter = async (data) => {
+//   const res = await fetch(`${BASE_URL}/reporter/register`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(data),
+//   });
+
+//   const result = await res.json();
+
+//   if (!res.ok) {
+//     throw new Error(result.message || "Registration failed");
+//   }
+
+//   return result;
+// };
+
+// export const loginReporter = async (data) => {
+//   const res = await fetch(`${BASE_URL}/reporter/login`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(data),
+//   });
+
+//   const result = await res.json();
+
+//   if (!res.ok) {
+//     throw new Error(result.message || "Login failed");
+//   }
+
+//   return result;
+// };
+</file>
+
+<file path="src/api/authService.js">
+const BASE_URL = "https://software-project-backend-api.onrender.com/api";
+
+const normalizeLoginPayload = (role, data) => {
+  switch (role) {
+    case "security":
+      return {
+        identifier: data.email || data.identifier,
+        password: data.password,
+      };
+
+    default:
+      return {
+        email: data.email,
+        password: data.password,
+      };
+  }
+};
+
+const normalizeRegisterPayload = (role, data) => {
+  switch (role) {
+    case "reporter":
+      return {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      };
+
+    case "security":
+      return {
+        name: data.name,
+        identifier: data.identifier || data.email,
+        password: data.password,
+      };
+
+    default:
+      return data;
+  }
+};
+
+export const authService = {
+  login: async (role, data) => {
+    const payload = normalizeLoginPayload(role, data);
+
+    const res = await fetch(`${BASE_URL}/auth/${role}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await res.json();
+    console.log("Login response:", result); 
+    if (!res.ok) {
+      throw new Error(result.message || "Login failed");
+    }
+
+    return result;
+  },
+
+  register: async (role, data) => {
+    const payload = normalizeRegisterPayload(role, data);
+
+    const res = await fetch(`${BASE_URL}/auth/${role}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result.message || "Registration failed");
+    }
+
+    return result;
+  },
+};
+</file>
+
+<file path="src/context/AuthContext.jsx">
+import React, { createContext, useContext, useState } from "react";
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
+
+  const loginUser = (data, userRole) => {
+    setUser(data.user);
+    setRole(userRole);
+
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+    }
+
+    localStorage.setItem("role", userRole);
+  };
+
+  const logout = () => {
+    setUser(null);
+    setRole(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, role, loginUser, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
+</file>
+
+<file path="src/pages/AuthPage/ReporterAuthPage.jsx">
+import React, { useState } from "react";
+import styles from "./ReporterAuthPage.module.css";
+import RoleSelectPanel from "./RoleSelectPanel";
+import { authService } from "../../api/authService";
+import { useAuth } from "../../context/AuthContext";
+
+export default function AuthPage() {
+
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const { loginUser } = useAuth();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const res = await authService.login("reporter", formData);
+
+      loginUser(res, "reporter");
+
+      console.log("Login success:", res);
+
+      // optional redirect
+      // window.location.href = "/reporter/dashboard";
+
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.navbar}>
+        <div className={styles.logo}>
+          <div className={styles.logoBox}>A</div>
+          <span>AEGIS</span>
+        </div>
+
+        <div className={styles.navCenter}>← BACK TO ROLE SELECT</div>
+
+        <a href="/reporter/sign-up" className={styles.signupBtn}>
+          SIGN UP
+        </a>
+      </div>
+
+      <div className={styles.content}>
+        <RoleSelectPanel />
+
+        <div className={styles.formSection}>
+          <p className={styles.signinLabel}>SIGN IN</p>
+          <h1 className={styles.title}>Welcome back</h1>
+          <p className={styles.subtitle}>
+            Sign in to view your reports and submit new ones.
+          </p>
+
+          <div className={styles.infoBox}>
+            <span className={styles.lock}>🔒</span>
+            <div>
+              <strong>Anonymous login available</strong>
+              <p>
+                You can also report incidents without creating an account.
+              </p>
+            </div>
+          </div>
+
+          {/* ✅ wrap in form */}
+          <form onSubmit={handleLogin}>
+
+            {/* error */}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
+            <div className={styles.formGroup}>
+              <label>Email address *</label>
+              <input
+                type="email"
+                placeholder="amaka@example.com"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label>Password *</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+              />
+            </div>
+
+            <div className={styles.formExtras}>
+              <label>
+                <input type="checkbox" defaultChecked />
+                Keep me signed in
+              </label>
+              <span className={styles.forgot}>Forgot password?</span>
+            </div>
+
+            <button
+              type="submit"
+              className={styles.primaryBtn}
+              disabled={loading}
+            >
+              {loading ? "Signing in..." : "SIGN IN SECURELY"}
+            </button>
+
+          </form>
+
+          <button className={styles.secondaryBtn}>
+            Continue Anonymously — No Account Needed
+          </button>
+
+          <p className={styles.footer}>
+            Don’t have an account?{" "}
+            <a href="/reporter/sign-up">Create one free</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/AuthPage/ReporterAuthPage.module.css">
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to right, #020617, #020617);
+  color: #e5e7eb;
+  font-family: "Inter", sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-bottom: 1px solid #0f172a;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoBox {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #14b8a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-weight: bold;
+}
+
+.logo span {
+  color: #14b8a6;
+  letter-spacing: 2px;
+}
+
+.navCenter {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.signupBtn {
+  background: transparent;
+  border: 1px solid #1e293b;
+  padding: 8px 16px;
+  color: #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* CONTENT */
+.content {
+  display: flex;
+}
+
+/* RIGHT FORM */
+.formSection {
+  flex: 1;
+  padding: 60px 80px;
+}
+
+.signinLabel {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #64748b;
+}
+
+.title {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.subtitle {
+  color: #94a3b8;
+  margin-bottom: 30px;
+}
+
+/* INFO BOX */
+.infoBox {
+  display: flex;
+  gap: 10px;
+  background: rgba(20, 184, 166, 0.1);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+.lock {
+  color: #14b8a6;
+}
+
+/* FORM */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #1e293b;
+  background: #020617;
+  color: white;
+}
+
+.formExtras {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.forgot {
+  color: #14b8a6;
+  cursor: pointer;
+}
+
+/* BUTTONS */
+.primaryBtn {
+  width: 100%;
+  padding: 14px;
+  background: #14b8a6;
+  border: none;
+  border-radius: 6px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.secondaryBtn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  color: #94a3b8;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #64748b;
+}
+
+.footer span {
+  color: #14b8a6;
+}
+</file>
+
+<file path="src/pages/AuthPage/ReporterRegisterPage.jsx">
+import React, { useState } from 'react';
+import styles from './ReporterRegisterPage.module.css';
+import { authService } from "../../api/authService";
+import { useAuth } from "../../context/AuthContext";
+
+const CreateAccount = () => {
+  const [displayName, setDisplayName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [agreed, setAgreed] = useState(true);
+
+  // ✅ NEW: loading + error state
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // const { registerUser } = useAuth(); 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (loading) return;
+    // ✅ basic validation (important)
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    if (!agreed) {
+      setError("You must agree to the terms");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError('');
+
+      // ✅ map displayName → name (backend requirement)
+      const payload = {
+        name: displayName || "Anonymous", // fallback if empty
+        email,
+        password,
+      };
+
+      const res = await authService.register("reporter", payload);
+      console.log("FULL RESPONSE:", res);
+      setDisplayName('');
+      setEmail('');
+      setPassword('');
+
+      
+      console.log("Signup success:", res);
+      alert("Account created successfully");
+
+      window.location.href = "/reporter/sign-in"; 
+
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Signup failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      {/* Header */}
+      <header className={styles.header}>
+        <div className={styles.logo}>
+          <div className={styles.logoIcon}>A</div>
+          <span className={styles.logoText}>AEGIS</span>
+        </div>
+        <div className={styles.headerRight}>
+          <a href="#" className={styles.backLink}>← BACK TO ROLE SELECT</a>
+          <button className={styles.signInBtn}>SIGN IN</button>
+        </div>
+      </header>
+
+      <div className={styles.mainContent}>
+        {/* Left Panel unchanged */}
+        <div className={styles.leftPanel}>
+          <div className={styles.createAccountHeader}>
+            <span className={styles.step}>CREATE ACCOUNT</span>
+          </div>
+          
+          <h1 className={styles.title}>
+            Join the <span className={styles.highlight}>community.</span>
+          </h1>
+          
+          <p className={styles.subtitle}>
+            Creating an account lets you track reports and receive updates. 
+            You can still report anonymously at any time.
+          </p>
+
+          <div className={styles.benefits}>
+            <div className={styles.benefitItem}>
+              <div className={styles.icon}>📍</div>
+              <div>
+                <div className={styles.benefitTitle}>Track All Your Reports</div>
+                <div className={styles.benefitDesc}>Real-time status updates for everything you submit.</div>
+              </div>
+            </div>
+
+            <div className={styles.benefitItem}>
+              <div className={styles.icon}>🔔</div>
+              <div>
+                <div className={styles.benefitTitle}>Community Safety Alerts</div>
+                <div className={styles.benefitDesc}>Receive notifications for incidents near you.</div>
+              </div>
+            </div>
+
+            <div className={styles.benefitItem}>
+              <div className={styles.icon}>👥</div>
+              <div>
+                <div className={styles.benefitTitle}>Community Watch Access</div>
+                <div className={styles.benefitDesc}>Connect with verified neighbourhood groups.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Panel */}
+        <div className={styles.rightPanel}>
+          <div className={styles.formContainer}>
+            <div className={styles.formHeader}>
+              <span className={styles.newAccount}>NEW ACCOUNT</span>
+              <h2 className={styles.formTitle}>Create your account</h2>
+            </div>
+
+            <form onSubmit={handleSubmit} className={styles.form}>
+              
+              {/* ✅ ERROR DISPLAY */}
+              {error && <p style={{ color: "red" }}>{error}</p>}
+
+              {/* Display Name */}
+              <div className={styles.inputGroup}>
+                <label className={styles.label}>
+                  Display Name <span className={styles.optional}>(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="e.g. Abuja Resident, Anonymous01"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                />
+                <p className={styles.helperText}>
+                  Only shown on community activity — never on reports.
+                </p>
+              </div>
+
+              {/* Email */}
+              <div className={styles.inputGroup}>
+                <label className={styles.label}>
+                  Email address <span className={styles.required}>*</span>
+                </label>
+                <div className={styles.inputWrapper}>
+                  <span className={styles.inputIcon}>✉️</span>
+                  <input
+                    type="email"
+                    className={styles.input}
+                    placeholder='amaka@example.com'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Password */}
+              <div className={styles.inputGroup}>
+                <label className={styles.label}>
+                  Password <span className={styles.required}>*</span>
+                </label>
+                <div className={styles.passwordWrapper}>
+                  <span className={styles.inputIcon}>🔑</span>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    className={styles.input}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className={styles.eyeIcon}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? '🙈' : '👁️'}
+                  </button>
+                </div>
+                <p className={styles.passwordStrength}>Strong password ✓</p>
+              </div>
+
+              {/* Terms */}
+              <div className={styles.terms}>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                  />
+                  <span>
+                    I agree to Aegis's <a href="#" className={styles.link}>Terms of Service</a> and{' '}
+                    <a href="#" className={styles.link}>Privacy Policy</a>.
+                  </span>
+                </label>
+              </div>
+
+              {/* Submit */}
+              <button 
+                type="submit" 
+                className={styles.createButton}
+                disabled={loading}
+                
+              >
+                {loading ? "CREATING..." : "CREATE ACCOUNT"}
+              </button>
+
+              <p className={styles.signInLink}>
+                Already have an account? <a href="#" className={styles.link}>Sign in</a>
+              </p>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CreateAccount;
+</file>
+
+<file path="src/pages/AuthPage/ReporterRegisterPage.module.css">
+.container {
+  min-height: 100vh;
+  background: #0a0c12;
+  color: #e0e0e0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid #1f2937;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoIcon {
+  background: #00f5a0;
+  color: #0a0c12;
+  font-weight: bold;
+  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.logoText {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.backLink {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.backLink:hover {
+  color: #e0e0e0;
+}
+
+.signInBtn {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #e0e0e0;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signInBtn:hover {
+  background: #1e2937;
+}
+
+.mainContent {
+  display: flex;
+  min-height: calc(100vh - 73px);
+}
+
+.leftPanel {
+  flex: 1;
+  background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.createAccountHeader {
+  margin-bottom: 20px;
+}
+
+.step {
+  color: #00f5a0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #00f5a0;
+  padding-bottom: 4px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  color: #00f5a0;
+}
+
+.subtitle {
+  color: #94a3b8;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 420px;
+  margin-bottom: 60px;
+}
+
+.benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.benefitItem {
+  display: flex;
+  gap: 16px;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+}
+
+.icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.benefitTitle {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.benefitDesc {
+  color: #94a3b8;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Right Panel */
+.rightPanel {
+  flex: 1;
+  padding: 80px 80px 60px;
+  background: #0a0c12;
+  display: flex;
+  align-items: center;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 480px;
+}
+
+.formHeader {
+  margin-bottom: 40px;
+}
+
+.newAccount {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.formTitle {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+.optional {
+  color: #64748b;
+  font-weight: 400;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.inputWrapper,
+.passwordWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  font-size: 18px;
+}
+
+.input {
+  width: 100%;
+  background: #1e2937;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 16px 16px 16px 48px;
+  color: #e0e0e0;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 1;
+  caret-color: #00f5a0;
+}
+
+.input:focus {
+  border-color: #00f5a0;
+  box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.1);
+}
+
+/* Password specific */
+.passwordWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrapper .input {
+  padding-right: 52px;
+}
+
+/* ✅ FIXED EYE ICON */
+.eyeIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  background: none;
+  border: none;
+  
+  font-size: 18px;
+  cursor: pointer;
+  
+  color: #64748b;
+  z-index: 2;
+}
+
+.eyeIcon:hover {
+  color: #e0e0e0;
+}
+
+.helperText {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.passwordStrength {
+  color: #00f5a0;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.terms {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.checkboxLabel {
+  display: flex;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.checkboxLabel input {
+  margin-top: 4px;
+}
+
+.link {
+  color: #00f5a0;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.createButton {
+  background: #00f5a0;
+  color: #0a0c12;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+
+.createButton:hover {
+  background: #00e08f;
+  transform: translateY(-1px);
+}
+
+.signInLink {
+  text-align: center;
+  margin-top: 20px;
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .mainContent {
+    flex-direction: column;
+  }
+  
+  .leftPanel, .rightPanel {
+    padding: 60px 40px;
+  }
+}
+</file>
+
+<file path=".gitignore">
+node_modules/
+.vscode/
+*.log
+</file>
+
+<file path="app.js">
+const screens = document.querySelectorAll('.screen');
+const htmlRoot = document.documentElement;
+const navButtons = document.querySelectorAll('[data-target]');
+
+function updateDeviceType() {
+  const width = window.innerWidth;
+  htmlRoot.classList.remove('phone', 'tablet', 'desktop');
+
+  if (width < 720) {
+    htmlRoot.classList.add('phone');
+  } else if (width < 1080) {
+    htmlRoot.classList.add('tablet');
+  } else {
+    htmlRoot.classList.add('desktop');
+  }
+}
+
+function setActiveScreen(screenId) {
+  screens.forEach((screen) => {
+    screen.classList.toggle('active', screen.id === screenId);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+navButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const target = button.dataset.target;
+    if (target) {
+      setActiveScreen(target);
+    }
+  });
+});
+
+window.addEventListener('resize', updateDeviceType);
+updateDeviceType();
+setActiveScreen('screen-home');
+
+const reporterSignupForm = document.getElementById('reporter-signup-form');
+const securityRegisterForm = document.getElementById('security-register-form');
+const reporterSigninForm = document.getElementById('reporter-signin-form');
+
+function bindForm(form, targetScreen) {
+  if (!form) return;
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    setActiveScreen(targetScreen);
+  });
+}
+
+bindForm(reporterSignupForm, 'screen-dashboard');
+bindForm(securityRegisterForm, 'screen-dashboard');
+bindForm(reporterSigninForm, 'screen-welcome-back');
+</file>
+
+<file path="extension.js">
+const vscode = require('vscode');
+
+/**
+ * @param {vscode.ExtensionContext} context
+ */
+function activate(context) {
+  const disposable = vscode.commands.registerCommand('aegis.helloWorld', function () {
+    vscode.window.showInformationMessage('Hello from Aegis Node.js extension!');
+  });
+
+  context.subscriptions.push(disposable);
+}
+
+function deactivate() {}
+
+module.exports = {
+  activate,
+  deactivate
+};
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aegis Web App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="package.json">
+{
+  "name": "aegis-web-app",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.14.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  }
+}
+</file>
+
+<file path="README.md">
+# software_project_web_client
+</file>
+
+<file path="src/main.jsx">
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import '../styles.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+</file>
+
+<file path="src/pages/AegisLanding.module.css">
+:root {
+  --bg-primary: #0a0f0e;
+  --bg-secondary: #111816;
+  --bg-card: #131a18;
+  --bg-card-hover: #1a2420;
+  --accent: #00e5cc;
+  --accent-dim: #00b5a0;
+  --accent-glow: rgba(0, 229, 204, 0.15);
+  --text-primary: #e8f0ee;
+  --text-secondary: #8a9e9a;
+  --text-muted: #556660;
+  --border: rgba(0, 229, 204, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Courier New', monospace;
+}
+
+/* ============================================================ ROOT */
+.root {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ============================================================ NAVBAR */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 56px;
+  background: rgba(10, 15, 14, 0.95);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoIcon {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.logoText {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.navLinks a:hover {
+  color: var(--text-primary);
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navSignIn {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.navSignIn:hover {
+  color: var(--text-primary);
+}
+
+.navCta {
+  background: var(--accent);
+  color: #000;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+  transition: background 0.2s;
+}
+
+.navCta:hover {
+  background: var(--accent-dim);
+}
+
+/* ============================================================ HERO */
+.hero {
+  padding: 40px 60px 60px;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  background: linear-gradient(135deg, #0a0f0e 0%, #0d1714 60%, #091210 100%);
+}
+
+.heroBreadcrumb {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.heroBreadcrumb span {
+  cursor: pointer;
+}
+
+.heroBreadcrumb span:not(:last-child)::after {
+  content: ' /';
+  margin-left: 6px;
+  color: var(--text-muted);
+}
+
+.breadcrumbActive {
+  color: var(--accent) !important;
+}
+
+.heroContent {
+  max-width: 580px;
+}
+
+.heroTitle {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 20px;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.heroTitleGreen {
+  color: var(--accent);
+}
+
+.heroDesc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0 0 32px;
+  max-width: 400px;
+  line-height: 1.7;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.btnPrimary {
+  background: var(--accent);
+  color: #000;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: 3px;
+  letter-spacing: 0.8px;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+}
+
+.btnPrimary:hover {
+  background: var(--accent-dim);
+  transform: translateY(-1px);
+}
+
+.btnSecondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--border-subtle);
+  padding: 11px 18px;
+  border-radius: 3px;
+  transition: border-color 0.2s;
+}
+
+.btnSecondary:hover {
+  border-color: var(--accent);
+}
+
+.downloadIcon {
+  font-size: 14px;
+}
+
+.btnText {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+.btnText:hover {
+  color: var(--accent);
+}
+
+.heroStats {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.statNum {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  font-family: var(--font-display);
+}
+
+.statSup {
+  font-size: 14px;
+  vertical-align: middle;
+  margin: 0 1px;
+}
+
+.statLabel {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  max-width: 80px;
+}
+
+.statDivider {
+  width: 1px;
+  height: 40px;
+  background: var(--border-subtle);
+  align-self: center;
+}
+
+/* ============================================================ TWO ROLES */
+.twoRoles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px;
+  gap: 60px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.twoRolesLeft {
+  flex: 1;
+  max-width: 420px;
+}
+
+.twoRolesRight {
+  display: flex;
+  gap: 12px;
+}
+
+.roleCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.roleIcon {
+  font-size: 16px;
+}
+
+/* ============================================================ SHARED SECTION STYLES */
+.sectionTitle {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 14px;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.sectionDesc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ============================================================ VICIOUS CYCLE */
+.vicious {
+  padding: 70px 60px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.viciousHeader {
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+
+.viciousGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.quoteBox {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.breakdownLoop {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 24px;
+}
+
+.loopTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.loopDesc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 16px;
+}
+
+.loopList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.loopList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.loopDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.issuesList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.issueItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.issueBar {
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ============================================================ THREE APPS */
+.threeApps {
+  padding: 70px 60px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, #0a0f0e 0%, #0d1714 100%);
+}
+
+.threeAppsHeader {
+  margin-bottom: 44px;
+  max-width: 560px;
+}
+
+.appsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.appCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 28px 24px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.appCard:hover {
+  border-color: var(--border);
+  background: var(--bg-card-hover);
+}
+
+.appTag {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.appIcon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.appName {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 12px;
+  letter-spacing: -0.2px;
+}
+
+.appDesc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+.appFeatures {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.appFeatures li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.featureDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+/* ============================================================ FOUR LAYERS */
+.fourLayers {
+  padding: 70px 60px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.fourLayersLeft {}
+
+.layersList {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.layerItem {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.layerItem:first-child {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.layerLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.layerName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.layerDesc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.fourLayersRight {
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rightFeature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.checkIcon {
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 13px;
+}
+
+/* ============================================================ WHY AEGIS */
+.whyAegis {
+  padding: 70px 60px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, #0a0f0e 0%, #0c1210 100%);
+}
+
+.whyHeader {
+  margin-bottom: 44px;
+  max-width: 560px;
+}
+
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.whyCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 24px;
+  transition: border-color 0.2s;
+}
+
+.whyCard:hover {
+  border-color: var(--border);
+}
+
+.whyIcon {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.whyTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+
+.whyDesc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ============================================================ ROADMAP */
+.roadmap {
+  padding: 70px 60px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.roadmapHeader {
+  margin-bottom: 44px;
+  max-width: 480px;
+}
+
+.roadmapGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.phaseCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 28px 24px;
+}
+
+.phaseTag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.phaseName {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 20px;
+  letter-spacing: -0.2px;
+}
+
+.phaseList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.phaseList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.phaseDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+/* ============================================================ REVENUE MODEL */
+.revenue {
+  padding: 70px 60px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 80px;
+  align-items: start;
+  background: linear-gradient(180deg, #0a0f0e 0%, #0d1714 100%);
+}
+
+.revenueLeft {
+  position: sticky;
+  top: 80px;
+}
+
+.revenueGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.revenueCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: border-color 0.2s;
+}
+
+.revenueCard:hover {
+  border-color: var(--border);
+}
+
+.revenueIcon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.revenueTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.revenueDesc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ============================================================ APP DOWNLOAD */
+.appDownload {
+  padding: 70px 60px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.appDownloadLeft {}
+
+.storeButtons {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.storeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 20px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.storeBtn:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.appDownloadRight {
+  display: flex;
+  justify-content: center;
+}
+
+.phoneMockup {
+  width: 160px;
+  height: 300px;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 14px;
+  position: relative;
+}
+
+.phoneMockup::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.phoneScreen {
+  height: 100%;
+  background: #0d1a17;
+  border-radius: 16px;
+  padding: 16px 10px 10px;
+  overflow: hidden;
+}
+
+.phoneHeader {
+  margin-bottom: 14px;
+}
+
+.phoneLogoSmall {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.phoneContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.phoneCard {
+  height: 60px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+}
+
+/* ============================================================ CTA */
+.cta {
+  padding: 100px 60px;
+  text-align: center;
+  background: linear-gradient(180deg, #0a0f0e 0%, #0d1714 50%, #0a0f0e 100%);
+  position: relative;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 229, 204, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ctaTitle {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+  letter-spacing: -0.3px;
+  position: relative;
+}
+
+.ctaDesc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+  position: relative;
+}
+
+.ctaActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+}
+
+.btnOutline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border-subtle);
+  padding: 11px 20px;
+  border-radius: 3px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btnOutline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================================================ FOOTER */
+.footer {
+  padding: 24px 60px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================================ RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero {
+    padding: 40px 32px 50px;
+  }
+
+  .heroTitle {
+    font-size: 34px;
+  }
+
+  .twoRoles,
+  .vicious,
+  .threeApps,
+  .fourLayers,
+  .whyAegis,
+  .roadmap,
+  .revenue,
+  .appDownload {
+    padding: 50px 32px;
+  }
+
+  .appsGrid,
+  .whyGrid,
+  .roadmapGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fourLayers {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .revenue {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .appDownload {
+    grid-template-columns: 1fr;
+  }
+
+  .cta {
+    padding: 70px 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .navLinks {
+    display: none;
+  }
+
+  .hero {
+    padding: 32px 20px 44px;
+  }
+
+  .heroTitle {
+    font-size: 28px;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .heroStats {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .twoRoles {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .vicious,
+  .threeApps,
+  .fourLayers,
+  .whyAegis,
+  .roadmap,
+  .revenue,
+  .appDownload,
+  .cta {
+    padding: 50px 20px;
+  }
+
+  .viciousGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .appsGrid,
+  .whyGrid,
+  .roadmapGrid,
+  .revenueGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionTitle {
+    font-size: 22px;
+  }
+
+  .ctaTitle {
+    font-size: 26px;
+  }
+}
+</file>
+
+<file path="src/pages/AuthPage/OfficerAuthPage.jsx">
+import React from 'react';
+import RoleSelectPanel from './RoleSelectPanel';
+import styles from './OfficerLoginPage.module.css';
+
+const OfficerLoginPage = () => {
+  return (
+    <div className={styles.pageWrapper}>
+      {/* Top Navigation Bar */}
+      <header className={styles.topHeader}>
+        <div className={styles.logoContainer}>
+          <div className={styles.logoSquare}>A</div>
+          <span className={styles.brandName}>AEGIS</span>
+        </div>
+        <div className={styles.centerNav}>
+          <a href="#" className={styles.backLink}>
+            ← BACK TO ROLE SELECT
+          </a>
+        </div>
+        <div className={styles.headerActions}>
+          <button className={styles.signUpBtn}>SIGN UP</button>
+        </div>
+      </header>
+
+      <main className={styles.mainLayout}>
+        {/* Left side inherited from your existing module */}
+        <RoleSelectPanel />
+
+        {/* Right side: Officer Login Portal */}
+        <div className={styles.formSection}>
+          <div className={styles.contentContainer}>
+            <header className={styles.formHeader}>
+              <p className={styles.superTitle}>SIGN IN</p>
+              <h1 className={styles.mainTitle}>Welcome back</h1>
+              <p className={styles.description}>
+                Sign in to view your reports and submit new ones.
+              </p>
+            </header>
+
+            <div className={styles.alertBox}>
+              <div className={styles.alertIcon}>🔒</div>
+              <div className={styles.alertText}>
+                <strong>Anonymous login available</strong>
+                <p>You can also report incidents without creating an account using the button below.</p>
+              </div>
+            </div>
+
+            <form className={styles.loginForm}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="email">Email address <span className={styles.required}>*</span></label>
+                <div className={styles.inputWrapper}>
+                  <span className={styles.icon}>✉️</span>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="amaka@example.com" 
+                    className={styles.input}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label htmlFor="password">Password <span className={styles.required}>*</span></label>
+                <div className={styles.inputWrapper}>
+                  <span className={styles.icon}>🔑</span>
+                  <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="••••••••" 
+                    className={styles.input}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.formActions}>
+                <label className={styles.checkboxLabel}>
+                  <input type="checkbox" className={styles.checkbox} defaultChecked />
+                  Keep me signed in
+                </label>
+                <a href="#" className={styles.forgotLink}>Forgot password?</a>
+              </div>
+
+              <button type="submit" className={styles.submitBtn}>
+                SIGN IN SECURELY
+              </button>
+
+              <button type="button" className={styles.anonymousBtn}>
+                Continue Anonymously — No Account Needed
+              </button>
+            </form>
+
+            <footer className={styles.formFooter}>
+              Don't have an account? <a href="/officer/sign-up" className={styles.createLink}>Create one free</a>
+            </footer>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default OfficerLoginPage;
+</file>
+
+<file path="src/pages/AuthPage/OfficerLoginPage.module.css">
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #0b111b;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header Styles */
+.topHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #161c27; /* Darker header bar */
+  border-bottom: 1px solid #1f2937;
+  height: 64px;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoSquare {
+  background-color: #00e5b0;
+  color: #0b111b;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  border-radius: 4px;
+}
+
+.brandName {
+  color: #00e5b0;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+}
+
+.backLink {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: #ffffff;
+}
+
+.signUpBtn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #374151;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Layout and Form Styles */
+.mainLayout {
+  display: flex;
+  flex: 1;
+}
+
+.formSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.contentContainer {
+  width: 100%;
+  max-width: 460px;
+}
+
+.superTitle {
+  color: #9ca3af;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.mainTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.description {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+}
+
+.alertBox {
+  background-color: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.alertText strong {
+  display: block;
+  color: #00e5b0;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.alertText p {
+  color: #9ca3af;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #f3f4f6;
+}
+
+.required {
+  color: #00e5b0;
+}
+
+.inputWrapper {
+  background-color: #0b111b;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+}
+
+.inputWrapper:focus-within {
+  border-color: #00e5b0;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  color: white;
+  height: 44px;
+  flex: 1;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  font-size: 0.8rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.forgotLink {
+  color: #00e5b0;
+  text-decoration: none;
+}
+
+.submitBtn {
+  width: 100%;
+  background-color: #00e5b0;
+  color: #0b111b;
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.anonymousBtn {
+  width: 100%;
+  background-color: transparent;
+  color: #9ca3af;
+  border: 1px solid #1f2937;
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.formFooter {
+  text-align: center;
+  margin-top: 24px;
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.createLink {
+  color: #00e5b0;
+  text-decoration: none;
+  font-weight: 600;
+}
+</file>
+
+<file path="src/pages/AuthPage/OfficerRegistrationPage.jsx">
+import React from 'react';
+import styles from './OfficerRegistrationPage.module.css';
+
+const OfficerRegistration = () => {
+  return (
+    <div className={styles.registrationContainer}>
+      <header className={styles.header}>
+        <div className={styles.logoSection}>
+          <div className={styles.logoIcon}>
+            <div className={styles.logoInitial}>A</div>
+          </div>
+          <span className={styles.aegisText}>AEGIS</span>
+        </div>
+        <div className={styles.navLinks}>
+          <a href="#" className={styles.backLink}>
+            <span className={styles.backArrow}>&larr;</span> BACK TO ROLE SELECT
+          </a>
+          <button className={styles.signInButton}>SIGN IN</button>
+        </div>
+      </header>
+
+      <main className={styles.mainContent}>
+        <div className={styles.sidebar}>
+          <div className={styles.sidebarTagline}>
+            <div className={styles.line}></div>
+            <span className={styles.taglineText}>OFFICER REGISTRATION</span>
+          </div>
+          <h1 className={styles.sidebarTitle}>Register credentials.</h1>
+          <p className={styles.sidebarDescription}>
+            Registration requires your official badge credentials. Access is granted only after departmental verification — 24 to 48 hours.
+          </p>
+
+          <div className={styles.featureList}>
+            <div className={styles.featureItem}>
+              <div className={styles.featureIcon}>
+                <span className={styles.featureIconText}>🕒</span>
+              </div>
+              <div className={styles.featureContent}>
+                <h3 className={styles.featureTitle}>24-48 Hour Verification</h3>
+                <p className={styles.featureSubtitle}>Your credentials are verified with your department.</p>
+              </div>
+            </div>
+            <div className={styles.featureItem}>
+              <div className={styles.featureIcon}>
+                <span className={styles.featureIconText}>✉️</span>
+              </div>
+              <div className={styles.featureContent}>
+                <h3 className={styles.featureTitle}>Official Email Required</h3>
+                <p className={styles.featureSubtitle}>Use your .gov.ng or official police force email address.</p>
+              </div>
+            </div>
+            <div className={styles.featureItem}>
+              <div className={styles.featureIcon}>
+                <span className={styles.featureIconText}>🔒</span>
+              </div>
+              <div className={styles.featureContent}>
+                <h3 className={styles.featureTitle}>Secure Credentialing</h3>
+                <p className={styles.featureSubtitle}>All officer data is encrypted and audit-logged.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.formSection}>
+          <div className={styles.formTagline}>
+            <span className={styles.taglineText}>OFFICER REGISTRATION</span>
+          </div>
+          <h1 className={styles.formTitle}>Create officer account</h1>
+
+          <form className={styles.registrationForm}>
+            <div className={styles.formGroup}>
+              <div className={styles.halfWidthInput}>
+                <label htmlFor="firstName">First Name *</label>
+                <div className={styles.inputWithIcon}>
+                  <span className={styles.inputIconText}>👤</span>
+                  <input type="text" id="firstName" value="Adebayo" disabled />
+                </div>
+              </div>
+              <div className={styles.halfWidthInput}>
+                <label htmlFor="lastName">Last Name *</label>
+                <div className={styles.inputWithIcon}>
+                  <span className={styles.inputIconText}>👤</span>
+                  <input type="text" id="lastName" value="Abubakar" disabled />
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="badgeNumber">Badge / Service Number *</label>
+              <div className={`${styles.inputWithIcon} ${styles.inputActive}`}>
+                <span className={styles.inputIconText}>💳</span>
+                <input type="text" id="badgeNumber" value="NPF-2024-08412" />
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="officialEmail">Official Email *</label>
+              <div className={styles.inputWithIcon}>
+                <span className={styles.inputIconText}>✉️</span>
+                <input type="email" id="officialEmail" value="adekabar@npf.gov.ng" disabled />
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <div className={styles.halfWidthInput}>
+                <label htmlFor="departmentUnit">Department / Unit *</label>
+                <div className={styles.inputWithIcon}>
+                  <span className={styles.inputIconText}>🏛️</span>
+                  <input type="text" id="departmentUnit" value="Jigawa Command" disabled />
+                </div>
+              </div>
+              <div className={styles.halfWidthInput}>
+                <label htmlFor="rank">Rank <span className={styles.optional}>(optional)</span></label>
+                <div className={styles.inputWithIcon}>
+                  <span className={styles.inputIconText}>⭐</span>
+                  <input type="text" id="rank" value="Inspector" disabled />
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="password">Password *</label>
+              <div className={styles.inputWithIcon}>
+                <span className={styles.inputIconText}>🔒</span>
+                <input type="password" id="password" value="............" />
+                <button type="button" className={styles.passwordToggle}>
+                  👁️
+                </button>
+              </div>
+              <p className={styles.passwordHint}>Medium — add symbols or numbers to strengthen</p>
+            </div>
+
+            <button type="submit" className={styles.submitButton}>
+              SUBMIT FOR DEPARTMENTAL VERIFICATION
+            </button>
+          </form>
+
+          <p className={styles.signinFooter}>
+            Already registered? <a href="#" className={styles.signinLink}>Sign in</a>
+          </p>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default OfficerRegistration;
+</file>
+
+<file path="src/pages/AuthPage/OfficerRegistrationPage.module.css">
+/* OfficerRegistration.module.css */
+
+.registrationContainer {
+  background-color: #0c111c;
+  color: #fff;
+  font-family: Arial, sans-serif; /* Fallback font, need to add external font for exact match */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background-color: #0c111c;
+  border-bottom: 1px solid #1a2233;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  background-color: #00e0b3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.logoInitial {
+  color: #0c111c;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.aegisText {
+  color: #00e0b3;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+}
+
+.backLink {
+  color: #aeb8c9;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-right: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.backArrow {
+  margin-right: 0.5rem;
+}
+
+.signInButton {
+  background-color: transparent;
+  color: #aeb8c9;
+  border: 1px solid #1a2233;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.signInButton:hover {
+  background-color: #1a2233;
+  color: #fff;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  padding: 4rem 3rem;
+  overflow: auto;
+}
+
+.sidebar {
+  width: 35%;
+  margin-right: 10rem;
+}
+
+.sidebarTagline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.line {
+  width: 3rem;
+  height: 1px;
+  background-color: #3f5e9e;
+  margin-right: 1rem;
+}
+
+.taglineText {
+  color: #3f5e9e;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.sidebarTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.sidebarDescription {
+  color: #aeb8c9;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+.featureList {
+  display: flex;
+  flex-direction: column;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  background-color: #101726;
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.featureIcon {
+  font-size: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.featureIconText {
+  color: #e5b018; /* Yellow/orange for icons */
+}
+
+.featureTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.featureSubtitle {
+  color: #aeb8c9;
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+.formSection {
+  width: 50%;
+}
+
+.formTagline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.formTagline .taglineText {
+  color: #aeb8c9;
+  font-size: 0.8rem;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.formTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.registrationForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.halfWidthInput {
+  width: calc(50% - 0.75rem);
+}
+
+.halfWidthInput:first-child {
+  margin-right: 1.5rem;
+}
+
+.inputWithIcon {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #101726;
+  border: 1px solid #1a2233;
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+}
+
+.inputIconText {
+  color: #e5b018;
+  margin-right: 1rem;
+  font-size: 1.2rem;
+}
+
+.inputWithIcon input {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.inputWithIcon input:focus {
+  outline: none;
+}
+
+.inputWithIcon input:disabled {
+  color: #838e9c;
+}
+
+.inputActive {
+  border: 2px solid #3d8bff;
+}
+
+.optional {
+  color: #aeb8c9;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+.passwordToggle {
+  background-color: transparent;
+  border: none;
+  color: #aeb8c9;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.passwordHint {
+  color: #aeb8c9;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.submitButton {
+  background-color: #3d8bff;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: #2b74df;
+}
+
+.signinFooter {
+  color: #aeb8c9;
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.signinLink {
+  color: #3d8bff;
+  text-decoration: none;
+}
+</file>
+
+<file path="src/pages/AuthPage/RoleSelectPanel.jsx">
+import React from "react";
+import styles from "./RoleSelectPanel.module.css";
+
+export default function RoleSelectPanel() {
+  return (
+    <div className={styles.panel}>
+      <h1>Select your role.</h1>
+      <p className={styles.desc}>
+        Your identity is always protected. You choose how much — or how little —
+        to reveal. Full anonymity is always available.
+      </p>
+
+      {/* Crime Reporter */}
+      <div className={`${styles.card} ${styles.active}`}>
+        <div className={styles.icon}>🛡️</div>
+        <p className={styles.tag}>COMMUNITY LEADER</p>
+        <h3>Crime Reporter</h3>
+        <p>
+          Report incidents anonymously, track your submissions, and access your
+          community safety map. No identity required.
+        </p>
+      </div>
+
+      {/* Security */}
+      <div className={styles.card}>
+        <div className={styles.icon}>🛡️</div>
+        <p className={styles.tagBlue}>LAW ENFORCEMENT</p>
+        <h3>Security Personnel</h3>
+        <p>
+          Access the command dashboard, manage active cases, dispatch units, and
+          coordinate incident response.
+        </p>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/AuthPage/RoleSelectPanel.module.css">
+.panel {
+  width: 420px;
+  padding: 60px 40px;
+  background: radial-gradient(circle at bottom, #0f172a, #020617);
+  border-right: 1px solid #0f172a;
+}
+
+.panel h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.desc {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* CARDS */
+.card {
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #020617;
+}
+
+.active {
+  border: 1px solid rgba(20, 184, 166, 0.5);
+  box-shadow: 0 0 25px rgba(20, 184, 166, 0.15);
+}
+
+.icon {
+  margin-bottom: 10px;
+}
+
+.tag {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #14b8a6;
+}
+
+.tagBlue {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #3b82f6;
+}
+
+.card h3 {
+  margin: 5px 0;
+}
+
+.card p {
+  font-size: 13px;
+  color: #94a3b8;
+}
+</file>
+
+<file path="src/pages/RoleSelect.jsx">
+import React from "react";
+import styles from "./RoleSelect.module.css";
+
+export default function AegisRoleSelect() {
+
+  return (
+    <div className={styles.container}>
+      {/* Close Button */}
+      <a href="/" className={styles.closeBtn}>×</a>
+
+      {/* Header */}
+      <div className={styles.header}>
+        <h1>
+          Welcome to <span>Aegis</span>
+        </h1>
+        <p>
+          Select your role to continue. Your dashboard, permissions and
+          experience are tailored to how you use Aegis.
+        </p>
+      </div>
+
+      {/* Cards */}
+      <div className={styles.cardWrapper}>
+        {/* Crime Reporter */}
+        <a className={`${styles.card} ${styles.leftCard}`} href="/reporter/sign-in">
+          <div className={styles.iconBox}>🛡️</div>
+
+          <p className={styles.roleTag}>COMMUNITY LEADER</p>
+          <h2>Crime Reporter</h2>
+
+          <p className={styles.description}>
+            Report incidents anonymously, track your submissions, and access
+            your community safety map. No identity required.
+          </p>
+
+          <button className={styles.primaryBtn}>
+            Continue as Crime Reporter →
+          </button>
+        </a>
+
+        {/* Security Personnel */}
+        <a className={`${styles.card} ${styles.rightCard}`} href="/officer/sign-in">
+          <div className={styles.iconBox}>🛡️</div>
+
+          <p className={styles.roleTagBlue}>LAW ENFORCEMENT</p>
+          <h2>Security Personnel</h2>
+
+          <p className={styles.description}>
+            Access the command dashboard, manage active cases, dispatch units,
+            and coordinate incident response.
+          </p>
+
+          <button className={styles.secondaryBtn}>
+            Continue as Security Officer →
+          </button>
+        </a>
+      </div>
+
+      {/* Footer */}
+      <p className={styles.footer}>
+        Already have one? <span>Sign in</span>
+      </p>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/RoleSelect.module.css">
+.container {
+  position: relative;
+  min-height: 100vh;
+  padding: 80px 20px; /* ⬅️ adds space top & bottom */
+
+  background: radial-gradient(circle at top, #0d1b2a, #020617);
+  color: #e5e7eb;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Inter", sans-serif;
+}
+/* Close button */
+.closeBtn {
+  text-decoration: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #0f172a;
+  border: none;
+  color: #94a3b8;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.header h1 span {
+  color: #14b8a6;
+}
+
+.header p {
+  margin-top: 10px;
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Cards wrapper */
+.cardWrapper {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+.cardWrapper a {
+  text-decoration: none;
+}   
+/* Card */
+.card {
+  width: 420px;
+  padding: 30px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #0f172a, #020617);
+  border: 1px solid #1e293b;
+  transition: 0.3s ease;
+}
+
+/* Left card glow */
+.leftCard {
+  border: 1px solid rgba(20, 184, 166, 0.4);
+  box-shadow: 0 0 40px rgba(20, 184, 166, 0.15);
+}
+
+/* Right card */
+.rightCard {
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Icon box */
+.iconBox {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: orange;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+/* Role tag */
+.roleTag {
+  color: #14b8a6;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.roleTagBlue {
+  color: #3b82f6;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+/* Titles */
+.card h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+/* Description */
+.description {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* Buttons */
+.primaryBtn {
+  background: none;
+  border: none;
+  color: #14b8a6;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.secondaryBtn {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Footer */
+.footer {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.footer span {
+  color: #14b8a6;
+  cursor: pointer;
+}
+</file>
+
+<file path="vite.config.js">
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+});
+</file>
+
+<file path="src/App.jsx">
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Landing from "./pages/Landing";
+import Welcome from "./pages/RoleSelect";
+import "../styles.css";
+import AuthPage from "./pages/AuthPage/ReporterAuthPage";
+import CreateAccount from "./pages/AuthPage/ReporterRegisterPage";
+import OfficerRegistration from "./pages/AuthPage/OfficerRegistrationPage";
+import OfficerAuthPage from "./pages/AuthPage/OfficerAuthPage"; 
+import { AuthProvider } from "./context/AuthContext";
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/select-role" element={<Welcome />} />
+          <Route path="/reporter/sign-up" element={<CreateAccount />} />
+          <Route path="/reporter/sign-in" element={<AuthPage />} />
+          <Route path="/officer/sign-in" element={<OfficerAuthPage />} />
+          <Route path="/officer/sign-up" element={<OfficerRegistration />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+}
+</file>
+
+<file path="styles.css">
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #0f1f3d, #050b18);
+  color: white;
+}
+</file>
+
+<file path="src/pages/Landing.jsx">
+import React, { useState } from "react";
+import styles from "./AegisLanding.module.css";
+
+const Navbar = () => (
+  <nav className={styles.navbar}>
+    <div className={styles.navLeft}>
+      <div className={styles.logo}>
+        <span className={styles.logoIcon}>⬡</span>
+        <span className={styles.logoText}>aegis</span>
+      </div>
+      <ul className={styles.navLinks}>
+        <li><a href="#">Platform</a></li>
+        <li><a href="#">Solutions</a></li>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Research</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div className={styles.navRight}>
+      <a href="/select-role" className={styles.navSignIn}>Sign In</a>
+      <a href="#" className={styles.navCta}>Get Started</a>
+    </div>
+  </nav>
+);
+
+const Hero = () => (
+  <section className={styles.hero}>
+    <div className={styles.heroBreadcrumb}>
+      <span>Home</span> / <span>Platform</span> / <span>Overview</span> / <span>Aegis</span> / <span className={styles.breadcrumbActive}>Building Trust</span>
+    </div>
+    <div className={styles.heroContent}>
+      <div className={styles.heroLeft}>
+        <h1 className={styles.heroTitle}>
+          <span className={styles.heroTitleGreen}>Aegis</span> – Building Trust Through Technology
+        </h1>
+        <p className={styles.heroDesc}>
+          A hybrid mobile platform and web assistance bridging the gap between Africa's agencies and citizens in developing nations. You stay. One Click.
+        </p>
+        <div className={styles.heroActions}>
+          <a href="#" className={styles.btnPrimary}>EXPLORE THE PLATFORM</a>
+          <a href="#" className={styles.btnSecondary}>
+            <span className={styles.downloadIcon}>📱</span> DOWNLOAD AEGIS
+          </a>
+          <a href="#" className={styles.btnText}>READ THE RESEARCH</a>
+        </div>
+        <div className={styles.heroStats}>
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>1<span className={styles.statSup}>in</span>5</span>
+            <span className={styles.statLabel}>Citizens lack access to safety reporting tools</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>1</span>
+            <span className={styles.statLabel}>Click anonymous reporting</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>3</span>
+            <span className={styles.statLabel}>Core apps in one ecosystem</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>∿</span>
+            <span className={styles.statLabel}>Real-time community safety intelligence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const TwoRoles = () => (
+  <section className={styles.twoRoles}>
+    <div className={styles.twoRolesLeft}>
+      <h2 className={styles.sectionTitle}>One App, Two Roles, Built for Both Sides of Safety.</h2>
+      <p className={styles.sectionDesc}>
+        Aegis serves both citizens and first responders. Citizens report incidents anonymously with full privacy. High-grade real-time community through the same unified interface.
+      </p>
+    </div>
+    <div className={styles.twoRolesRight}>
+      <div className={styles.roleCard}>
+        <span className={styles.roleIcon}>🚨</span>
+        <span>Crime Response</span>
+      </div>
+      <div className={styles.roleCard}>
+        <span className={styles.roleIcon}>🛡️</span>
+        <span>Security Personnel</span>
+      </div>
+    </div>
+  </section>
+);
+
+const ViciousCycle = () => (
+  <section className={styles.vicious}>
+    <div className={styles.viciousHeader}>
+      <h2 className={styles.sectionTitle}>A Vicious Cycle That Defeats Itself</h2>
+      <p className={styles.sectionDesc}>
+        Residents don't trust the system enough to report — Agencies claim they can't improve without data. Neither side moves first, and communities stay unsafe.
+      </p>
+    </div>
+    <div className={styles.viciousGrid}>
+      <div className={styles.viciousLeft}>
+        <div className={styles.quoteBox}>
+          <p>"I witnessed corruption personally, yet felt I had no information provided to the description to the force of a similar nature to a lawful complaint."</p>
+        </div>
+        <div className={styles.breakdownLoop}>
+          <h4 className={styles.loopTitle}>The Breakdown Loop</h4>
+          <p className={styles.loopDesc}>When reporting fails to prevent crime, trust fails to surface information...</p>
+          <ul className={styles.loopList}>
+            <li><span className={styles.loopDot} style={{background:'#ff4444'}} />Police are seen as ineffective or inaccessible to approach</li>
+            <li><span className={styles.loopDot} style={{background:'#ffaa00'}} />Victims and witnesses stay silent out of fear or distrust</li>
+            <li><span className={styles.loopDot} style={{background:'#00ccaa'}} />Perpetrators go unchecked — crime and corruption continue</li>
+            <li><span className={styles.loopDot} style={{background:'#4488ff'}} />Crime data never materializes or is never recorded</li>
+          </ul>
+        </div>
+      </div>
+      <div className={styles.viciousRight}>
+        <div className={styles.issuesList}>
+          {[
+            { color: '#ff4444', label: 'Rampant Acts of Corruption & Bribery' },
+            { color: '#ff8800', label: 'Police Brutality & Institutional Violence' },
+            { color: '#ffcc00', label: 'Police Loss of Weapons & Uniforms' },
+            { color: '#44bb44', label: 'Insufficient Funding & Consequent Training' },
+            { color: '#00aacc', label: 'Lack of Manpower: Personnel & Equipment Issues' },
+            { color: '#8844ff', label: 'Deportation: Legislation Shortfalls for Irregular Issues' },
+            { color: '#ff4488', label: "Deportation & Legislation Shortfalls for Irregular Issues" },
+          ].map((item, i) => (
+            <div key={i} className={styles.issueItem}>
+              <span className={styles.issueBar} style={{background: item.color}} />
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const ThreeApps = () => (
+  <section className={styles.threeApps}>
+    <div className={styles.threeAppsHeader}>
+      <h2 className={styles.sectionTitle}>Three Apps. One Ecosystem. One Goal.</h2>
+      <p className={styles.sectionDesc}>
+        Aegis isn't a single product. It's an operating system — spanning citizen reporting, community watch networks, and police management built to holistically tackle trust and safety across communities.
+      </p>
+    </div>
+    <div className={styles.appsGrid}>
+      {[
+        {
+          tag: 'APP 1',
+          icon: '🛡️',
+          name: 'SafePort',
+          color: '#00e5cc',
+          desc: 'A secure, anonymous reporting platform for citizens to submit safety concerns directly to trusted authorities — with full privacy protections and real-time response tracking.',
+          features: [
+            'Anonymous, encrypted incident reporting',
+            'GPS-tagged submissions with media attachments',
+            'Real-time case tracking and updates',
+            'Multi-language support for local access',
+            'One-click emergency SOS escalation',
+          ]
+        },
+        {
+          tag: 'APP 2',
+          icon: '👁️',
+          name: 'CommunityWatch',
+          color: '#ffaa00',
+          desc: 'A neighborhood safety intelligence layer where verified community members log incidents, share alerts, and build a live safety map — enabling coordinated community responses.',
+          features: [
+            'Verified community member network',
+            'Live incident mapping and safety alerts',
+            'Community safety scoring by zone',
+            'Peer-to-peer anonymous tip sharing',
+            'Moderated reporting to prevent misuse',
+          ]
+        },
+        {
+          tag: 'APP 3 · 4',
+          icon: '🔗',
+          name: 'PoliceConnect',
+          color: '#4488ff',
+          desc: 'A powerful command dashboard for law enforcement agencies to receive validated reports, dispatch resources, manage cases, and close the loop with transparent citizen feedback.',
+          features: [
+            'Unified report management dashboard',
+            'Automated triage and case prioritization',
+            'Officer deployment and GPS tracking',
+            'Transparent citizen-facing case updates',
+            'Performance analytics and accountability metrics',
+          ]
+        },
+      ].map((app, i) => (
+        <div key={i} className={styles.appCard}>
+          <div className={styles.appTag}>{app.tag}</div>
+          <div className={styles.appIcon} style={{color: app.color}}>{app.icon}</div>
+          <h3 className={styles.appName} style={{color: app.color}}>{app.name}</h3>
+          <p className={styles.appDesc}>{app.desc}</p>
+          <ul className={styles.appFeatures}>
+            {app.features.map((f, j) => (
+              <li key={j}><span className={styles.featureDot} style={{background: app.color}} />{f}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const FourLayers = () => (
+  <section className={styles.fourLayers}>
+    <div className={styles.fourLayersLeft}>
+      <h2 className={styles.sectionTitle}>Four Layers of Trust-Building</h2>
+      <p className={styles.sectionDesc}>
+        Our framework addresses systemic failure points — from citizen reporting infrastructure right through transparent accountability tools.
+      </p>
+      <div className={styles.layersList}>
+        {[
+          { name: 'Safe Reporting Channel', desc: 'Citizens can report without fear — full anonymization and encryption applied at entry point.' },
+          { name: 'Community Safety Network', desc: 'The wider community becomes active participants — verifying incidents and keeping neighborhoods informed.' },
+          { name: 'Transparency Dashboard', desc: 'Agencies publish response rates and case outcomes — restoring public confidence through measurable results.' },
+          { name: 'Trust-Building Features', desc: 'Cross-stakeholder accountability measures ensure no single actor can corrupt or suppress safety data.' },
+        ].map((layer, i) => (
+          <div key={i} className={styles.layerItem}>
+            <div className={styles.layerLabel}>LAYER {i + 1}</div>
+            <h4 className={styles.layerName}>{layer.name}</h4>
+            <p className={styles.layerDesc}>{layer.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div className={styles.fourLayersRight}>
+      {[
+        'End-to-end encrypted reports with zero personally identifiable data stored',
+        'Multi-party verification prevents false reporting and manipulation',
+        'Immutable audit logs ensure accountability for all parties',
+        'Real-time response metrics published to public transparency portal',
+        'Third-party civil society audits of agency performance data',
+        'Algorithmic bias detection built into case routing systems',
+        'Automated SLA timers trigger escalation when cases stall',
+        'Citizen satisfaction scores feed back into agency accountability ratings',
+      ].map((feat, i) => (
+        <div key={i} className={styles.rightFeature}>
+          <span className={styles.checkIcon}>✓</span>
+          <span>{feat}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const WhyAegis = () => (
+  <section className={styles.whyAegis}>
+    <div className={styles.whyHeader}>
+      <h2 className={styles.sectionTitle}>What Makes Aegis Work Where Others Failed</h2>
+      <p className={styles.sectionDesc}>Six structural advantages that separate Aegis from failed hotlines and disconnected reporting systems.</p>
+    </div>
+    <div className={styles.whyGrid}>
+      {[
+        { icon: '🔒', title: 'Independence from Police Control', desc: "Aegis isn't run by the police. It's governed by independent civil society bodies — meaning agencies can't suppress or alter reports." },
+        { icon: '🌐', title: 'Open Source & Auditable', desc: 'All core components are open source and independently auditable — communities can verify exactly how their data is handled.' },
+        { icon: '📋', title: 'GDPR-Level Data Protection', desc: 'We apply EU-grade data protections in all markets — your identity is never stored, sold, or accessible to government authorities.' },
+        { icon: '📡', title: 'Offline-First Architecture', desc: 'Designed to function in low-connectivity environments — submissions queue locally and sync when connectivity is restored.' },
+        { icon: '🏛️', title: 'Multi-Stakeholder Governance', desc: 'Decisions about the platform are made by citizens, civil society, academia, and government in equal measure — no single party holds control.' },
+        { icon: '👥', title: 'Moderation + Human Oversight', desc: 'AI-assisted triage is always reviewed by trained human moderators before cases reach law enforcement — preventing algorithmic bias.' },
+      ].map((item, i) => (
+        <div key={i} className={styles.whyCard}>
+          <div className={styles.whyIcon}>{item.icon}</div>
+          <h4 className={styles.whyTitle}>{item.title}</h4>
+          <p className={styles.whyDesc}>{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const Roadmap = () => (
+  <section className={styles.roadmap}>
+    <div className={styles.roadmapHeader}>
+      <h2 className={styles.sectionTitle}>From Pilot to National Scale</h2>
+      <p className={styles.sectionDesc}>A carefully staged rollout that builds trust at each phase before expanding.</p>
+    </div>
+    <div className={styles.roadmapGrid}>
+      {[
+        {
+          phase: 'PHASE 1',
+          name: 'Pilot',
+          color: '#00e5cc',
+          items: [
+            'Deploy in 2 cities with partner NGOs',
+            'Onboard 500 early adopter citizens',
+            'Train 3 police divisions on dashboard',
+            'Measure baseline reporting rates',
+            'Iterate on UX based on field feedback',
+          ]
+        },
+        {
+          phase: 'PHASE 2',
+          name: 'Expand',
+          color: '#ffaa00',
+          items: [
+            'Extend to 5 additional urban centers',
+            'Launch CommunityWatch layer',
+            'Partner with 2 government ministries',
+            'Open source the core platform',
+            'Publish first transparency report',
+          ]
+        },
+        {
+          phase: 'PHASE 3',
+          name: 'National Scale',
+          color: '#4488ff',
+          items: [
+            'National rollout across all major regions',
+            'Integrate with national emergency systems',
+            'Launch multi-language support (12 languages)',
+            'Establish independent oversight board',
+            'Export model to neighboring countries',
+          ]
+        },
+      ].map((phase, i) => (
+        <div key={i} className={styles.phaseCard}>
+          <div className={styles.phaseTag} style={{color: phase.color}}>{phase.phase}</div>
+          <h3 className={styles.phaseName} style={{color: phase.color}}>{phase.name}</h3>
+          <ul className={styles.phaseList}>
+            {phase.items.map((item, j) => (
+              <li key={j}><span className={styles.phaseDot} style={{background: phase.color}} />{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const RevenueModel = () => (
+  <section className={styles.revenue}>
+    <div className={styles.revenueLeft}>
+      <h2 className={styles.sectionTitle}>A Diversified Model Built to Last</h2>
+      <p className={styles.sectionDesc}>
+        Built on multiple revenue streams — ensuring financial independence, eliminating conflicts of interest, and sustaining long-term operations without government dependency.
+      </p>
+    </div>
+    <div className={styles.revenueRight}>
+      <div className={styles.revenueGrid}>
+        {[
+          { icon: '💰', title: 'International Development Grants', desc: 'Funding from multilateral development banks and international NGOs supporting civic tech in emerging markets.' },
+          { icon: '🏛️', title: 'Government Partnerships', desc: 'SaaS licensing agreements with state and federal agencies for the PoliceConnect dashboard.' },
+          { icon: '🤝', title: 'CSO Partnerships', desc: 'Revenue sharing with civil society organizations that deploy and manage local Aegis implementations.' },
+          { icon: '📊', title: 'NGO & Civil Society Support', desc: 'Aggregate (anonymized) safety data reports and API access for academic researchers and urban planners.' },
+        ].map((item, i) => (
+          <div key={i} className={styles.revenueCard}>
+            <div className={styles.revenueIcon}>{item.icon}</div>
+            <div>
+              <h4 className={styles.revenueTitle}>{item.title}</h4>
+              <p className={styles.revenueDesc}>{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const AppDownload = () => (
+  <section className={styles.appDownload}>
+    <div className={styles.appDownloadLeft}>
+      <h2 className={styles.sectionTitle}>Safety Intelligence in Your Pocket</h2>
+      <p className={styles.sectionDesc}>
+        Download Aegis and join thousands of citizens building safer communities — one verified report at a time.
+      </p>
+      <div className={styles.storeButtons}>
+        <a href="#" className={styles.storeBtn}>
+          <span>🍎</span> App Store
+        </a>
+        <a href="#" className={styles.storeBtn}>
+          <span>▶</span> Google Play
+        </a>
+      </div>
+    </div>
+    <div className={styles.appDownloadRight}>
+      <div className={styles.phoneMockup}>
+        <div className={styles.phoneScreen}>
+          <div className={styles.phoneHeader}>
+            <span className={styles.phoneLogoSmall}>⬡ aegis</span>
+          </div>
+          <div className={styles.phoneContent}>
+            <div className={styles.phoneCard} />
+            <div className={styles.phoneCard} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const CTA = () => (
+  <section className={styles.cta}>
+    <h2 className={styles.ctaTitle}>Ready to Help Bridge the Gap?</h2>
+    <p className={styles.ctaDesc}>
+      Whether you're a government agency, NGO, researcher, or concerned citizen — Aegis has a role for you. Join us in building the infrastructure for safer communities across Africa.
+    </p>
+    <div className={styles.ctaActions}>
+      <a href="#" className={styles.btnPrimary}>Get Started</a>
+      <a href="#" className={styles.btnOutline}>📎 Learn More</a>
+    </div>
+  </section>
+);
+
+const Footer = () => (
+  <footer className={styles.footer}>
+    <div className={styles.footerLogo}>
+      <span className={styles.logoIcon}>⬡</span>
+      <span className={styles.logoText}>aegis</span>
+    </div>
+  </footer>
+);
+
+export default function AegisLanding() {
+  return (
+    <div className={styles.root}>
+      <Navbar />
+      <Hero />
+      <TwoRoles />
+      <ViciousCycle />
+      <ThreeApps />
+      <FourLayers />
+      <WhyAegis />
+      <Roadmap />
+      <RevenueModel />
+      <AppDownload />
+      <CTA />
+      <Footer />
+    </div>
+  );
+}
+</file>
+
+</files>

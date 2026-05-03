@@ -1,16 +1,15 @@
 .container {
   min-height: 100vh;
-  background: #0a0c12;
-  color: #e0e0e0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--color-blue-8, rgba(10, 15, 30, 1));
+  color: #e5e7eb;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  border-bottom: 1px solid #1f2937;
+  padding: 15px 40px;
+  border-bottom: 1px solid #0f172a;
 }
 
 .logo {
@@ -19,52 +18,61 @@
   gap: 10px;
 }
 
-.logoIcon {
-  background: #00f5a0;
-  color: #0a0c12;
-  font-weight: bold;
-  font-size: 24px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-}
 
 .logoText {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 1px;
+  color: #14b8a6;
+  letter-spacing: 2px;
+  font-family: DM Mono;
+  font-weight: font weight/400;
+  font-style: Regular;
+  font-size: 13.6px;
+  line-height: line height/22_44;
+  letter-spacing: letter spacing/2_04;
+  vertical-align: middle;
+  text-transform: uppercase;
 }
-
-.headerRight {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
 .backLink {
-  color: #94a3b8;
   text-decoration: none;
-  font-size: 14px;
+  color: var(--color-grey-46, #6B7280);
+  font-size: 12px;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0.72px;
+  vertical-align: middle;
+  text-transform: uppercase;
 }
 
 .backLink:hover {
-  color: #e0e0e0;
+  color: #e5e7eb;
 }
 
 .signInBtn {
-  background: transparent;
-  border: 1px solid #334155;
-  color: #e0e0e0;
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
+  text-decoration: none;
+  width: 75px;
+  height: 34px;
+  border-radius: 2px;
+  text-align: center;
+  border-width: 1px;
+  opacity: 1;
+  border: 1px solid #FFFFFF12;
+  color: var(--color-grey-91, #E5E7EB);
+  font-family: DM Mono;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.9px;
+  line-height: 3;
+  letter-spacing: 1.09;
+  vertical-align: middle;
+  text-transform: uppercase;
+
 }
 
 .signInBtn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
   background: #1e2937;
 }
 
@@ -148,7 +156,8 @@
 .rightPanel {
   flex: 1;
   padding: 80px 80px 60px;
-  background: #0a0c12;
+  /* background: #0a0c12; */
+  background: var(--color-blue-8, #0A0F1E);
   display: flex;
   align-items: center;
 }
@@ -226,6 +235,9 @@
   font-size: 16px;
   outline: none;
   transition: all 0.2s;
+  position: relative;
+  z-index: 1;
+  caret-color: #00f5a0;
 }
 
 .input:focus {
@@ -233,20 +245,35 @@
   box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.1);
 }
 
-.passwordWrapper .input {
-  padding-right: 50px;
+/* Password specific */
+.passwordWrapper {
+  display: flex;
+  align-items: center;
 }
 
+.passwordWrapper .input {
+  padding-right: 52px;
+}
+
+/* ✅ FIXED EYE ICON */
 .eyeIcon {
   position: absolute;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
+  
   background: none;
   border: none;
-  font-size: 20px;
+  
+  font-size: 18px;
   cursor: pointer;
+  
   color: #64748b;
+  z-index: 2;
+}
+
+.eyeIcon:hover {
+  color: #e0e0e0;
 }
 
 .helperText {

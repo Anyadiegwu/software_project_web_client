@@ -17,18 +17,6 @@
   gap: 10px;
 }
 
-.logoBox {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: #00D4AA;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: black;
-  font-weight: bold;
-}
-
 .logo span {
   color: #14b8a6;
   letter-spacing: 2px;
@@ -76,23 +64,18 @@
   text-transform: uppercase;
 
 }
-/* Layout and Form Styles */
-.mainLayout {
+.content {
   display: flex;
   align-items: center;
 }
 
+/* RIGHT FORM */
 .formSection {
   flex: 1;
   padding: 60px 80px;
 }
 
-.contentContainer {
-  width: 100%;
-  /* max-width: 460px; */
-}
-
-.superTitle {
+.signinLabel {
   font-family: DM Mono;
   font-weight: 400;
   font-style: Regular;
@@ -102,9 +85,10 @@
   vertical-align: middle;
   text-transform: uppercase;
   color:  var(--color-grey-46, #6B7280);
+
 }
 
-.mainTitle {
+.title {
   font-family: Playfair Display;
   font-weight: 700;
   font-style: Bold;
@@ -115,7 +99,7 @@
   color: var(--color-grey-98, #F9FAFB);
 }
 
-.description {
+.subtitle {
   margin-top: 0;
   font-family: DM Sans;
   font-weight: 400;
@@ -127,19 +111,25 @@
   color: var(--color-grey-46, #6B7280);
 }
 
-.alertBox {
+.infoBox {
+  display: flex;
   border-top: 1px solid var(--color-cyan-4228, #00D4AA47);
   background: var(--color-cyan-428, #00D4AA14);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
+  margin-bottom: 25px;
+  border-radius: 6px;
   border-width: 1px;
+  padding-top: 12px;
+  padding-right: 16px;
+  padding-bottom: 12px;
+  padding-left: 16px;
   gap: 10px;
-  margin-bottom: 32px;
   opacity: 1;
 }
 
-.alertText strong {
+.lock {
+  margin-top: 2px;
+}
+.infoBox strong{
   font-family: DM Sans;
   font-weight: 700;
   font-style: Bold;
@@ -149,8 +139,7 @@
   vertical-align: middle;
   color: var(--color-cyan-42, #00D4AA);
 }
-
-.alertText p {
+.infoBox p{
   font-family: DM Sans;
   font-weight: 400;
   font-style: Regular;
@@ -161,12 +150,12 @@
   color: var(--color-grey-91, #E5E7EB);
   margin-top: 0;
 }
-
-.inputGroup {
+/* FORM */
+.formGroup {
   margin-bottom: 20px;
 }
 
-.inputGroup label {
+.formGroup label {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -179,13 +168,11 @@
   letter-spacing: 0%;
   margin-bottom: 10px;
 }
-
-.required {
+.formGroup label span {
   color: var(--color-cyan-42, #00D4AA);
   margin-top: 2px;
-}
-
-.inputWrapper {
+} 
+.inputContainer {
   display: flex;
   padding-left: 12px;
   gap: 10px;
@@ -195,25 +182,25 @@
   color: white;
   border-radius: 6px;
 }
-
-.inputWrapper:focus-within {
-  border: 1px solid var(--color-cyan-42, #00D4AA);
+.inputContainer:focus-within {
+  border: 1px solid var(--color-cyan-42, #00D4AA);  
   outline: none;
+  
 }
-
-.inputWrapper input {
+.formGroup input {
   width: 100%;
-  padding: 16px 12px 16px 0;
+  padding: 12px 12px 12px 0;
   background: var(--color-azure-15, #161F35);
   outline: none;
   color: white;
   border: none;
 }
-.inputWrapper input:focus {
+.formGroup input:focus {
   outline: none;
   border: none;
+
 }
-.inputWrapper::placeholder {
+.formGroup input::placeholder {
   font-family: DM Sans;
   font-weight: 400;
   font-style: Regular;
@@ -229,18 +216,15 @@
   border: none;
   outline: none;
 }
-.formActions {
+.formExtras {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 28px;
-  font-size: 0.8rem;
+  margin-bottom: 20px;
+  font-size: 12px;
 }
-
-.checkboxLabel {
+.formExtras label {
   display: flex;
   align-items: center;
-  cursor: pointer;
   gap: 5px;
   color: var(--color-grey-46, #6B7280);
   font-family: DM Sans;
@@ -250,14 +234,15 @@
   line-height: 100%;
   letter-spacing: 0%;
   vertical-align: middle;
-}
-.formActions label input[type="checkbox"] {
+  cursor: pointer;
+} 
+.formExtras label input[type="checkbox"] {
   accent-color: #00D4AA; 
   cursor: pointer;
 }
-.forgotLink {
+
+.forgot {
   color: var(--color-cyan-42, #00D4AA);
-  text-decoration: none;
   cursor: pointer;
   font-family: DM Sans;
   font-weight: 400;
@@ -266,9 +251,12 @@
   line-height: 100%;
   letter-spacing: 0%;
   vertical-align: middle;
+  text-decoration: none;
+
 }
 
-.submitBtn {
+/* BUTTONS */
+.primaryBtn {
   width: 100%;
   padding: 14px;
   background: #14b8a6;
@@ -288,7 +276,7 @@
   text-transform: uppercase;
 }
 
-.anonymousBtn {
+.secondaryBtn {
   width: 100%;
   padding: 12px;
   background: transparent;
@@ -305,7 +293,7 @@
   vertical-align: middle;
 }
 
-.formFooter {
+.footer {
   text-align: center;
   margin-top: 20px;
   color: var(--color-grey-46, #6B7280);
@@ -319,7 +307,7 @@
   vertical-align: middle;
 }
 
-.createLink {
+.footer a {
   text-decoration: none;
   color:  var(--color-cyan-42, #00D4AA);
   cursor: pointer;
