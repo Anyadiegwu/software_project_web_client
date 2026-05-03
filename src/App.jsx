@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Landing from "./pages/Landing";
+import Welcome from "./pages/Welcome";
+import "../styles.css";
 
-function App() {
+export default function App() {
  return(
-  <Landing />
- )
+   <Router>
+        <Routes>
+            <Route path="/" element={<Landing />} />    
+            <Route path="/welcome" element={<Welcome />} /> 
+        </Routes>   
+   </Router>)
 }
-
-export default App;

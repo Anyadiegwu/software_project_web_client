@@ -1,11 +1,11 @@
 :root {
-  --bg-primary: #0a0f0e;
-  --bg-secondary: #111816;
-  --bg-card: #131a18;
-  --bg-card-hover: #1a2420;
+  --bg-primary: rgb(4, 39, 44);
+  --bg-secondary: hwb(196 2% 81%);
+  --bg-card: #021222;
+  --bg-card-hover: #021229;
   --accent: #00e5cc;
   --accent-dim: #00b5a0;
-  --accent-glow: rgba(0, 229, 204, 0.15);
+  --accent-glow: rgba(10, 7, 75, 0.15);
   --text-primary: #e8f0ee;
   --text-secondary: #8a9e9a;
   --text-muted: #556660;
@@ -58,7 +58,10 @@
   color: var(--accent);
   font-size: 18px;
 }
-
+.logoIcon img {
+  width: 18px;
+  height: 18px;
+}
 .logoText {
   color: var(--text-primary);
   font-size: 15px;
