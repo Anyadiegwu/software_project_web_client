@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import styles from "./AegisLanding.module.css";
+import logo from "../images/image.png";
 
 const Navbar = () => (
   <nav className={styles.navbar}>
     <div className={styles.navLeft}>
       <div className={styles.logo}>
-        <span className={styles.logoIcon}>⬡</span>
-        <span className={styles.logoText}>aegis</span>
+        <span className={styles.logoIcon}>
+            <img src={logo} alt="Aegis Logo" />
+        </span>
+        <span className={styles.logoText}>Aegis</span>
       </div>
       <ul className={styles.navLinks}>
-        <li><a href="#">Platform</a></li>
-        <li><a href="#">Solutions</a></li>
-        <li><a href="#">How It Works</a></li>
-        <li><a href="#">Research</a></li>
-        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">PROBLEM</a></li>
+        <li><a href="#">SOLUTION</a></li>
+        <li><a href="#">ARCHITECTURE</a></li>
+        <li><a href="#">ROADMAP</a></li>
+        <li><a href="#">MOBILE APP</a></li>
       </ul>
     </div>
     <div className={styles.navRight}>
-      <a href="/select-role" className={styles.navSignIn}>Sign In</a>
-      <a href="#" className={styles.navCta}>Get Started</a>
+      <a href="/select-role" className={styles.btnOutline}>Sign UP</a>
+      <a href="#" className={styles.navCta}>DOWNLOAD AEGIS</a>
     </div>
   </nav>
 );
@@ -26,7 +29,7 @@ const Navbar = () => (
 const Hero = () => (
   <section className={styles.hero}>
     <div className={styles.heroBreadcrumb}>
-      <span>Home</span> / <span>Platform</span> / <span>Overview</span> / <span>Aegis</span> / <span className={styles.breadcrumbActive}>Building Trust</span>
+      <span>SDG 16</span> <span>PEACE,</span> <span>JUSTICE & STRONG INSTITUTION .</span> <span>JAN 2026</span>
     </div>
     <div className={styles.heroContent}>
       <div className={styles.heroLeft}>
@@ -34,7 +37,7 @@ const Hero = () => (
           <span className={styles.heroTitleGreen}>Aegis</span> – Building Trust Through Technology
         </h1>
         <p className={styles.heroDesc}>
-          A hybrid mobile platform and web assistance bridging the gap between Africa's agencies and citizens in developing nations. You stay. One Click.
+          A hybrid mobile platform and web ecosystem bridging the gap between security agencies and citizens in developing nations. Two roles. One mission.
         </p>
         <div className={styles.heroActions}>
           <a href="#" className={styles.btnPrimary}>EXPLORE THE PLATFORM</a>
@@ -45,23 +48,20 @@ const Hero = () => (
         </div>
         <div className={styles.heroStats}>
           <div className={styles.statItem}>
-            <span className={styles.statNum}>1<span className={styles.statSup}>in</span>5</span>
-            <span className={styles.statLabel}>Citizens lack access to safety reporting tools</span>
+            <span className={styles.statNum}>1<span className={styles.statSup}>:</span>618</span>
+            <span className={styles.statLabel}>CURRENT POLICE-TO-POPULATION RATIO</span>
           </div>
-          <div className={styles.statDivider} />
           <div className={styles.statItem}>
-            <span className={styles.statNum}>1</span>
-            <span className={styles.statLabel}>Click anonymous reporting</span>
-          </div>
-          <div className={styles.statDivider} />
+            <span className={styles.statNum}>#1</span>
+            <span className={styles.statLabel}>OBSTACLE IS BROKEN TRUST</span>
+         </div>
           <div className={styles.statItem}>
             <span className={styles.statNum}>3</span>
-            <span className={styles.statLabel}>Core apps in one ecosystem</span>
-          </div>
-          <div className={styles.statDivider} />
+            <span className={styles.statLabel}>INTERCONNECTED APPLICATIONS IN ONE ECOSYSTEM</span>
+            </div>
           <div className={styles.statItem}>
-            <span className={styles.statNum}>∿</span>
-            <span className={styles.statLabel}>Real-time community safety intelligence</span>
+            <span className={styles.statNum}>&</span>
+            <span className={styles.statLabel}>POTENTIAL FOR NATIONAL & REGIONAL SCALE</span>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@ const TwoRoles = () => (
       <h2 className={styles.sectionTitle}>One App, Two Roles, Built for Both Sides of Safety.</h2>
       <p className={styles.sectionDesc}>
         Aegis serves both citizens and first responders. Citizens report incidents anonymously with full privacy. High-grade real-time community through the same unified interface.
-      </p>
+      </p> 
     </div>
     <div className={styles.twoRolesRight}>
       <div className={styles.roleCard}>
