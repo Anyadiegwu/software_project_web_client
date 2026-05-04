@@ -1,296 +1,537 @@
-/* OfficerRegistration.module.css */
-
+/* ============================================================ ROOT */
 .registrationContainer {
-  background-color: #0c111c;
-  color: #fff;
-  font-family: Arial, sans-serif; /* Fallback font, need to add external font for exact match */
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background: var(--color-blue-8, rgba(10, 15, 30, 1));
+  color: #e5e7eb;
 }
 
+/* ============================================================ HEADER */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 3rem;
-  background-color: #0c111c;
-  border-bottom: 1px solid #1a2233;
+  padding: 15px 40px;
+  border-bottom: 1px solid #0f172a;
 }
 
 .logoSection {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
-.logoIcon {
-  width: 32px;
-  height: 32px;
-  background-color: #00e0b3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-}
-
-.logoInitial {
-  color: #0c111c;
-  font-weight: bold;
-  font-size: 1.2rem;
+/* Equivalent to logoIcon in your JSX */
+.logoSection svg {
+  flex-shrink: 0;
 }
 
 .aegisText {
-  color: #00e0b3;
-  font-weight: bold;
-  font-size: 1.2rem;
+  color: #14b8a6;
+  letter-spacing: 2px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 13.6px;
+  line-height: 22.44px; /* Fixed from line height/22_44 */
+  vertical-align: middle;
+  text-transform: uppercase;
 }
 
 .navLinks {
   display: flex;
   align-items: center;
+  gap: 20px; /* Added spacing to match the new JSX structure */
 }
 
 .backLink {
-  color: #aeb8c9;
   text-decoration: none;
-  font-size: 0.9rem;
-  margin-right: 1.5rem;
-  display: flex;
-  align-items: center;
+  color: var(--color-grey-46, #6B7280);
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: 0.72px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: #e5e7eb;
 }
 
 .backArrow {
-  margin-right: 0.5rem;
+  margin-right: 4px;
 }
 
 .signInButton {
-  background-color: transparent;
-  color: #aeb8c9;
-  border: 1px solid #1a2233;
-  padding: 0.5rem 1.2rem;
-  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  width: 75px;
+  height: 34px;
+  border-radius: 2px;
+  border: 1px solid #FFFFFF12;
+  background: transparent;
+  color: var(--color-grey-91, #E5E7EB);
+  font-family: 'DM Mono', monospace;
+  font-weight: 400;
+  font-size: 11.9px;
+  letter-spacing: 1.09px;
+  text-transform: uppercase;
   cursor: pointer;
-  font-size: 0.9rem;
+  transition: all 0.2s;
 }
 
 .signInButton:hover {
-  background-color: #1a2233;
+  border-color: rgba(255, 255, 255, 0.2);
   color: #fff;
+  background: #1e2937;
 }
-
+/* ============================================================ MAIN LAYOUT */
 .mainContent {
+  display: grid;
+  grid-template-columns: 380px 1fr;
   flex: 1;
-  display: flex;
-  padding: 4rem 3rem;
-  overflow: auto;
+  min-height: calc(100vh - 65px);
 }
 
+/* ============================================================ SIDEBAR */
 .sidebar {
-  width: 35%;
-  margin-right: 10rem;
+  background: linear-gradient(160deg, #0d1526 0%, #0a1020 60%, #080e1a 100%);
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Subtle blue glow bottom-left */
+.sidebar::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.07) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .sidebarTagline {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  gap: 14px;
+  margin-bottom: 28px;
 }
 
 .line {
-  width: 3rem;
-  height: 1px;
-  background-color: #3f5e9e;
-  margin-right: 1rem;
+  width: 28px;
+  height: 2px;
+  background: #3b82f6;
+  background: var(--color-azure-60, #3B82F6);
+  flex-shrink: 0;
 }
 
 .taglineText {
-  color: #3f5e9e;
-  font-size: 0.8rem;
-  font-weight: bold;
+  color: var(--color-azure-60, #3B82F6);
+  text-transform: uppercase;
+  font-family: DM Mono;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 9.9px;
+  line-height: 100%;
+  letter-spacing: 1.98px;
+  vertical-align: middle;
   text-transform: uppercase;
 }
 
 .sidebarTitle {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
+  font-family: Playfair Display;
+  font-weight: 900;
+  font-style: Black;
+  font-size: 36.8px;
+  line-height: 41.22px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  margin: 0 0 20px;
+  color: #ffffff;
+}
+.sidebarTitle p{
+  color: var(--color-azure-60, #3B82F6);
+  margin: 0;
+}
+/* "credentials." in blue italic */
+.sidebarTitle span,
+.credentialsHighlight {
+  color: #3b82f6;
+  font-style: italic;
 }
 
 .sidebarDescription {
-  color: #aeb8c9;
-  line-height: 1.6;
-  margin-bottom: 3rem;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 13.4px;
+  line-height: 22.85px;
+  color: var(--color-azure-65, #9CA3AF);
+  letter-spacing: 0%;
+  vertical-align: middle;
+  margin: 0 0 48px;
+  max-width: 280px;
 }
 
+/* ============================================================ FEATURE LIST */
 .featureList {
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
 .featureItem {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-  background-color: #101726;
-  padding: 1.5rem;
-  border-radius: 4px;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 16px 18px;
+  transition: border-color 0.2s;
+}
+
+.featureItem:hover {
+  border-color: rgba(59, 130, 246, 0.2);
 }
 
 .featureIcon {
-  font-size: 1.5rem;
-  margin-right: 1.5rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .featureIconText {
-  color: #e5b018; /* Yellow/orange for icons */
+  font-size: 22px;
+  line-height: 1;
 }
 
 .featureTitle {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 0.3rem;
+  color: var(--color-grey-98, #F9FAFB);
+  margin: 0 0 4px;
+  font-family: DM Sans;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12.2px;
+  line-height: 17.63px;
+  letter-spacing: 0%;
+  vertical-align: middle;
 }
 
 .featureSubtitle {
-  color: #aeb8c9;
-  font-size: 0.9rem;
-  margin-bottom: 0;
+  color: var(--color-azure-65, #9CA3AF);
+  margin: 0;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.7px;
+  line-height: 16.94px;
+  letter-spacing: 0%;
+  vertical-align: middle;
 }
 
+/* ============================================================ FORM SECTION */
 .formSection {
-  width: 50%;
+  background: #0d1117;
+  padding: 60px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .formTagline {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 12px;
 }
 
 .formTagline .taglineText {
-  color: #aeb8c9;
-  font-size: 0.8rem;
-  font-weight: normal;
-  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-grey-46, #6B7280);
+  letter-spacing: 2px;
 }
 
 .formTitle {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
+  font-family: Playfair Display;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 27.2px;
+  line-height: 32.64px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: var(--color-grey-98, #F9FAFB);
+  letter-spacing: -0.3px;
+  margin: 0 0 32px;
 }
 
+/* ============================================================ FORM */
 .registrationForm {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 .formGroup {
-  margin-bottom: 1.5rem;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.formGroup label {
-  display: block;
-  font-weight: bold;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  width: 100%;
+/* Side-by-side row */
+.formGroup:has(.halfWidthInput) {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
 }
 
 .halfWidthInput {
-  width: calc(50% - 0.75rem);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.halfWidthInput:first-child {
-  margin-right: 1.5rem;
-}
-
-.inputWithIcon {
-  position: relative;
-  width: 100%;
+.formGroup label,
+.halfWidthInput label {
+  color: var(--color-grey-91, #E5E7EB);
+  font-family: DM Sans;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 11.8px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
   display: flex;
   align-items: center;
-  background-color: #101726;
-  border: 1px solid #1a2233;
-  border-radius: 4px;
-  padding: 0.8rem 1rem;
+  gap: 6px;
+}
+#optional {
+  font-size: 11px;
+  font-weight: 400;
+  color: #556660;
+}
+
+.formGroup label p,
+.halfWidthInput label p{
+  color:var(--color-cyan-42, #00D4AA);
+}
+
+.formGroup label span[style],
+.required {
+  color: #3b82f6;
+  font-size: 13px;
+}
+
+
+
+/* ============================================================ INPUTS */
+.inputWithIcon {
+  display: flex;
+  align-items: center;
+  background: #141c2b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.inputWithIcon:focus-within {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+}
+
+/* Active/filled state — blue border */
+.inputActive {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
 }
 
 .inputIconText {
-  color: #e5b018;
-  margin-right: 1rem;
-  font-size: 1.2rem;
+  font-size: 14px;
+  padding: 0 12px 0 14px;
+  flex-shrink: 0;
+  opacity: 0.7;
+  line-height: 1;
 }
 
 .inputWithIcon input {
   flex: 1;
-  background-color: transparent;
+  background: transparent;
   border: none;
-  color: #fff;
-  font-size: 1rem;
-}
-
-.inputWithIcon input:focus {
   outline: none;
-}
-
-.inputWithIcon input:disabled {
-  color: #838e9c;
-}
-
-.inputActive {
-  border: 2px solid #3d8bff;
-}
-
-.optional {
-  color: #aeb8c9;
-  font-weight: normal;
-  font-size: 0.8rem;
-}
-
-.passwordToggle {
-  background-color: transparent;
-  border: none;
-  color: #aeb8c9;
-  font-size: 1.2rem;
-  cursor: pointer;
-  margin-left: 1rem;
-}
-
-.passwordHint {
-  color: #aeb8c9;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
+  padding: 14px 14px 14px 0;
+  font-size: 14px;
+  color: #e8f0ee;
+  font-family: inherit;
   width: 100%;
 }
 
-.submitButton {
-  background-color: #3d8bff;
-  color: #fff;
+.inputWithIcon input::placeholder {
+  color: #3d5050;
+}
+
+.passwordToggle {
+  background: none;
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-  margin-top: 1rem;
-  transition: background-color 0.2s ease;
+  font-size: 16px;
+  padding: 0 14px;
+  flex-shrink: 0;
+  color: #556660;
+  transition: color 0.2s;
+  line-height: 1;
 }
 
-.submitButton:hover {
-  background-color: #2b74df;
+.passwordToggle:hover {
+  color: #3b82f6;
 }
 
-.signinFooter {
-  color: #aeb8c9;
-  font-size: 0.9rem;
-  margin-top: 1.5rem;
+/* ============================================================ PASSWORD HINT & STRENGTH BAR */
+.passwordHint {
+  font-size: 11px;
+  color: #8a9e9a;
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+/* Strength bar — rendered via a pseudo-element trick using data attribute on parent */
+.formGroup:has(#password) .inputWithIcon::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #f59e0b;
+  width: 65%;
+  border-radius: 0 0 6px 6px;
+}
+
+/* Simpler: just add a bar element below the password wrapper */
+.strengthBar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.strengthBarFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.strengthWeak   { width: 25%; background: #ef4444; }
+.strengthMedium { width: 60%; background: #f59e0b; }
+.strengthStrong { width: 100%; background: #22c55e; }
+
+/* ============================================================ SUBMIT BUTTON */
+.submitButton {
+  width: 100%;
+  background: var(--color-azure-60, #3B82F6);
+  color: #ffffff;
+  padding: 18px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 8px;
+  font-family: DM Sans;
+  font-weight: 600;
+  font-style: SemiBold;
+  font-size: 13.8px;
+  line-height: 100%;
+  letter-spacing: 0.41px;
   text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================ FOOTER */
+.signinFooter {
+  color: #6b8080;
+  text-align: center;
+  margin: 16px 0 0;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.8px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .signinLink {
-  color: #3d8bff;
+  color: #3b82f6;
   text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.signinLink:hover {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+/* ============================================================ RESPONSIVE */
+@media (max-width: 1024px) {
+  .mainContent {
+    grid-template-columns: 320px 1fr;
+  }
+
+  .formSection {
+    padding: 48px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    padding: 40px 24px;
+  }
+
+  .formSection {
+    padding: 40px 24px;
+  }
+
+  .formGroup:has(.halfWidthInput) {
+    flex-direction: column;
+  }
+
+  .header {
+    padding: 16px 20px;
+  }
+
+  .backLink {
+    display: none;
+  }
 }

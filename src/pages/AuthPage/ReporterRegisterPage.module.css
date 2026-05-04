@@ -1,3 +1,4 @@
+/* ============================================================ ROOT */
 .container {
   min-height: 100vh;
   background: var(--color-blue-8, rgba(10, 15, 30, 1));
@@ -76,275 +77,491 @@
   background: #1e2937;
 }
 
+/* ============================================================ MAIN LAYOUT */
 .mainContent {
-  display: flex;
-  min-height: calc(100vh - 73px);
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  flex: 1;
+  min-height: calc(100vh - 65px);
 }
 
+/* ============================================================ LEFT PANEL */
 .leftPanel {
-  flex: 1;
-  background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
-  padding: 80px 60px;
+  padding: 60px 40px;
+  background: linear-gradient(163.52deg, #0D1526 0%, #161F35 100%);
   display: flex;
   flex-direction: column;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Subtle teal glow bottom-left */
+.leftPanel::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 212, 170, 0.08) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .createAccountHeader {
-  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.createAccountHeader::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: #00d4aa;
+  flex-shrink: 0;
 }
 
 .step {
-  color: #00f5a0;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  border-bottom: 2px solid #00f5a0;
-  padding-bottom: 4px;
+  color: var(--color-cyan-42, #00D4AA);
+  font-family: DM Mono;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 9.9px;
+  line-height: 100%;
+  letter-spacing: 1.98px;
+  vertical-align: middle;
+  text-transform: uppercase;
 }
 
 .title {
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 20px;
+  font-family: Playfair Display;
+  font-weight: 900;
+  font-style: Black;
+  font-size: 36.8px;
+  line-height: 41.22px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  margin: 0 0 20px;
+  color: var(--color-grey-98, #F9FAFB);
+  letter-spacing: -0.5px;
+  max-width: 300px;
 }
 
 .highlight {
-  color: #00f5a0;
+  color:  var(--color-cyan-42, #00D4AA);
 }
 
 .subtitle {
-  color: #94a3b8;
-  font-size: 18px;
-  line-height: 1.6;
-  max-width: 420px;
-  margin-bottom: 60px;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 13.4px;
+  line-height: 22.85px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: var(--color-azure-65, #9CA3AF);
+  margin: 0 0 48px;
+  max-width: 280px;
 }
 
+/* ============================================================ BENEFITS */
 .benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--color-azure-15, #161F35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 16px 18px;
+  transition: border-color 0.2s;
+}
+
+.benefitItem:hover {
+  border-color: rgba(0, 212, 170, 0.2);
+}
+
+.icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.benefitTitle {
+  margin-bottom: 4px;
+  color: var(--color-grey-98, #F9FAFB);
+  font-family: DM Sans;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12.2px;
+  line-height: 17.63px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  }
+
+.benefitDesc {
+  color: var(--color-azure-65, #9CA3AF);
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.7px;
+  line-height: 16.94px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+/* ============================================================ RIGHT PANEL */
+.rightPanel {
+  background: var(--color-blue-8, #0A0F1E);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 80px;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 720px;
+}
+
+/* ============================================================ FORM HEADER */
+.formHeader {
+  margin-bottom: 36px;
+}
+
+.newAccount {
+  color: var(--color-grey-46, #6B7280);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
+  font-family: DM Mono;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 9.6px;
+  line-height: 100%;
+  letter-spacing: 1.54px;
+}
+
+.formTitle {
+  margin: 0;
+  font-family: Playfair Display;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 27.2px;
+  line-height: 32.64px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: var(--color-grey-98, #F9FAFB);
+}
+
+/* ============================================================ FORM */
+.form {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.benefitItem {
-  display: flex;
-  gap: 16px;
-  background: rgba(15, 23, 42, 0.6);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #334155;
-}
-
-.icon {
-  font-size: 24px;
-  flex-shrink: 0;
-}
-
-.benefitTitle {
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.benefitDesc {
-  color: #94a3b8;
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-/* Right Panel */
-.rightPanel {
-  flex: 1;
-  padding: 80px 80px 60px;
-  /* background: #0a0c12; */
-  background: var(--color-blue-8, #0A0F1E);
-  display: flex;
-  align-items: center;
-}
-
-.formContainer {
-  width: 100%;
-  max-width: 480px;
-}
-
-.formHeader {
-  margin-bottom: 40px;
-}
-
-.newAccount {
-  color: #64748b;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-
-.formTitle {
-  font-size: 32px;
-  font-weight: 700;
-  margin-top: 8px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
 .inputGroup {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .label {
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-grey-91, #E5E7EB);
+  font-family: DM Sans;
   font-weight: 500;
-  color: #cbd5e1;
+  font-style: Medium;
+  font-size: 11.8px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
 }
 
 .optional {
-  color: #64748b;
+  font-size: 11px;
   font-weight: 400;
+  color: var(--color-grey-46, #6B7280);
+  font-weight: 300;
+  font-style: Light;
+  font-size: 10.6px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
 }
 
 .required {
-  color: #ef4444;
+  color: #00d4aa;
+  font-size: 13px;
 }
 
-.inputWrapper,
-.passwordWrapper {
-  position: relative;
-}
-
-.inputIcon {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #64748b;
-  font-size: 18px;
-}
-
+/* Base input shared styles */
 .input {
   width: 100%;
-  background: #1e2937;
-  border: 1px solid #334155;
-  border-radius: 8px;
-  padding: 16px 16px 16px 48px;
-  color: #e0e0e0;
-  font-size: 16px;
+  background: #141c2b;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #e8f0ee;
   outline: none;
-  transition: all 0.2s;
-  position: relative;
-  z-index: 1;
-  caret-color: #00f5a0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.input::placeholder {
+  color: var(--color-grey-46, #6B7280);
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 13.4px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
 }
 
 .input:focus {
-  border-color: #00f5a0;
-  box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.1);
+  border-color: #00d4aa;
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.08);
+  outline: none;
+}
+.inputE {
+  width: 100%;
+  background: #141c2b;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #e8f0ee;
+  border: none;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
 }
 
-/* Password specific */
+.inputE::placeholder {
+  color: var(--color-grey-98, #F9FAFB);
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 13.4px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.inputE:focus {
+  outline: none;
+}
+
+/* ============================================================ INPUT WRAPPERS */
+.inputWrapper,
 .passwordWrapper {
+  position: relative;
   display: flex;
   align-items: center;
+  background: #141c2b;
+  border: 1px solid #00d4aa;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  border: 1px solid var(--color-white-11, #FFFFFF1C);
 }
 
+.inputWrapper:focus-within,
+.passwordWrapper:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+  border: 1px solid var(--color-cyan-42, #00D4AA)
+}
+
+.inputWrapper .input,
 .passwordWrapper .input {
-  padding-right: 52px;
+  border: none;
+  background: transparent;
+  padding-left: 12px;
+  box-shadow: none;
 }
 
-/* ✅ FIXED EYE ICON */
+.inputWrapper .input:focus,
+.passwordWrapper .input:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.inputIcon {
+  font-size: 14px;
+  padding-left: 14px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
 .eyeIcon {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  
   background: none;
   border: none;
-  
-  font-size: 18px;
   cursor: pointer;
-  
-  color: #64748b;
-  z-index: 2;
+  font-size: 16px;
+  padding: 0 14px;
+  flex-shrink: 0;
+  color: #556660;
+  transition: color 0.2s;
+  line-height: 1;
 }
 
 .eyeIcon:hover {
-  color: #e0e0e0;
+  color: #00d4aa;
 }
 
+/* ============================================================ HELPER TEXT */
 .helperText {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 4px;
+  color: var(--color-grey-46, #6B7280);
+  margin: 0;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 10.1px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
 }
 
+/* ============================================================ PASSWORD STRENGTH */
 .passwordStrength {
-  color: #00f5a0;
-  font-size: 13px;
-  margin-top: 4px;
+  font-size: 11px;
+  color: #00d4aa;
+  margin: 0;
+  font-weight: 600;
 }
 
+/* ============================================================ TERMS */
 .terms {
-  font-size: 14px;
-  color: #94a3b8;
-  line-height: 1.6;
+  margin-top: -4px;
 }
 
 .checkboxLabel {
   display: flex;
-  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+  gap: 5px;
+  color: var(--color-grey-46, #6B7280);
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.7px;
+  line-height: 17.5px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+.checkboxLabel input[type="checkbox"] {
+  accent-color: #00D4AA; 
   cursor: pointer;
 }
-
-.checkboxLabel input {
-  margin-top: 4px;
+.checkboxLabel input[type='checkbox']:not(:checked) {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .link {
-  color: #00f5a0;
-  text-decoration: none;
+  color: #00d4aa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .link:hover {
-  text-decoration: underline;
+  color: #00b5a0;
 }
 
+/* ============================================================ SUBMIT BUTTON */
 .createButton {
-  background: #00f5a0;
-  color: #0a0c12;
-  font-weight: 700;
-  font-size: 16px;
-  padding: 18px;
+  width: 100%;
+  background: var(--color-cyan-42, #00D4AA);
+  color: var(--color-blue-8, #0A0F1E);
+  padding: 18px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px;
-  transition: all 0.2s;
+  transition: background 0.2s, transform 0.15s;
+  font-family: inherit;
+  margin-top: 4px;
+  font-family: DM Sans;
+  font-weight: 600;
+  font-style: SemiBold;
+  font-size: 13.8px;
+  line-height: 100%;
+  letter-spacing: 0.41px;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
 }
 
-.createButton:hover {
-  background: #00e08f;
+.createButton:hover:not(:disabled) {
+  background: #00b5a0;
   transform: translateY(-1px);
 }
 
-.signInLink {
-  text-align: center;
-  margin-top: 20px;
-  color: #94a3b8;
-  font-size: 15px;
+.createButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* Responsive */
+/* ============================================================ SIGN IN LINK */
+.signInLink {
+  color: #6b8080;
+  text-align: center;
+  margin: 0;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.8px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.signInLink a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ============================================================ RESPONSIVE */
 @media (max-width: 1024px) {
   .mainContent {
-    flex-direction: column;
+    grid-template-columns: 320px 1fr;
   }
-  
-  .leftPanel, .rightPanel {
-    padding: 60px 40px;
+
+  .rightPanel {
+    padding: 48px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+  }
+
+  .leftPanel {
+    padding: 40px 24px;
+  }
+
+  .rightPanel {
+    padding: 40px 24px;
+  }
+
+  .header {
+    padding: 16px 20px;
+  }
+
+  .backLink {
+    display: none;
   }
 }

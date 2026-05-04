@@ -1,155 +1,7 @@
-// import React from 'react';
-// import styles from './OfficerRegistrationPage.module.css';
-
-// const OfficerRegistration = () => {
-//   return (
-//     <div className={styles.registrationContainer}>
-//       <header className={styles.header}>
-//         <div className={styles.logoSection}>
-//           <div className={styles.logoIcon}>
-//             <div className={styles.logoInitial}>A</div>
-//           </div>
-//           <span className={styles.aegisText}>AEGIS</span>
-//         </div>
-//         <div className={styles.navLinks}>
-//           <a href="#" className={styles.backLink}>
-//             <span className={styles.backArrow}>&larr;</span> BACK TO ROLE SELECT
-//           </a>
-//           <button className={styles.signInButton}>SIGN IN</button>
-//         </div>
-//       </header>
-
-//       <main className={styles.mainContent}>
-//         <div className={styles.sidebar}>
-//           <div className={styles.sidebarTagline}>
-//             <div className={styles.line}></div>
-//             <span className={styles.taglineText}>OFFICER REGISTRATION</span>
-//           </div>
-//           <h1 className={styles.sidebarTitle}>Register credentials.</h1>
-//           <p className={styles.sidebarDescription}>
-//             Registration requires your official badge credentials. Access is granted only after departmental verification — 24 to 48 hours.
-//           </p>
-
-//           <div className={styles.featureList}>
-//             <div className={styles.featureItem}>
-//               <div className={styles.featureIcon}>
-//                 <span className={styles.featureIconText}>🕒</span>
-//               </div>
-//               <div className={styles.featureContent}>
-//                 <h3 className={styles.featureTitle}>24-48 Hour Verification</h3>
-//                 <p className={styles.featureSubtitle}>Your credentials are verified with your department.</p>
-//               </div>
-//             </div>
-//             <div className={styles.featureItem}>
-//               <div className={styles.featureIcon}>
-//                 <span className={styles.featureIconText}>✉️</span>
-//               </div>
-//               <div className={styles.featureContent}>
-//                 <h3 className={styles.featureTitle}>Official Email Required</h3>
-//                 <p className={styles.featureSubtitle}>Use your .gov.ng or official police force email address.</p>
-//               </div>
-//             </div>
-//             <div className={styles.featureItem}>
-//               <div className={styles.featureIcon}>
-//                 <span className={styles.featureIconText}>🔒</span>
-//               </div>
-//               <div className={styles.featureContent}>
-//                 <h3 className={styles.featureTitle}>Secure Credentialing</h3>
-//                 <p className={styles.featureSubtitle}>All officer data is encrypted and audit-logged.</p>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className={styles.formSection}>
-//           <div className={styles.formTagline}>
-//             <span className={styles.taglineText}>OFFICER REGISTRATION</span>
-//           </div>
-//           <h1 className={styles.formTitle}>Create officer account</h1>
-
-//           <form className={styles.registrationForm}>
-//             <div className={styles.formGroup}>
-//               <div className={styles.halfWidthInput}>
-//                 <label htmlFor="firstName">First Name *</label>
-//                 <div className={styles.inputWithIcon}>
-//                   <span className={styles.inputIconText}>👤</span>
-//                   <input type="text" id="firstName" value="Adebayo" disabled />
-//                 </div>
-//               </div>
-//               <div className={styles.halfWidthInput}>
-//                 <label htmlFor="lastName">Last Name *</label>
-//                 <div className={styles.inputWithIcon}>
-//                   <span className={styles.inputIconText}>👤</span>
-//                   <input type="text" id="lastName" value="Abubakar" disabled />
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className={styles.formGroup}>
-//               <label htmlFor="badgeNumber">Badge / Service Number *</label>
-//               <div className={`${styles.inputWithIcon} ${styles.inputActive}`}>
-//                 <span className={styles.inputIconText}>💳</span>
-//                 <input type="text" id="badgeNumber" value="NPF-2024-08412" />
-//               </div>
-//             </div>
-
-//             <div className={styles.formGroup}>
-//               <label htmlFor="officialEmail">Official Email *</label>
-//               <div className={styles.inputWithIcon}>
-//                 <span className={styles.inputIconText}>✉️</span>
-//                 <input type="email" id="officialEmail" value="adekabar@npf.gov.ng" disabled />
-//               </div>
-//             </div>
-
-//             <div className={styles.formGroup}>
-//               <div className={styles.halfWidthInput}>
-//                 <label htmlFor="departmentUnit">Department / Unit *</label>
-//                 <div className={styles.inputWithIcon}>
-//                   <span className={styles.inputIconText}>🏛️</span>
-//                   <input type="text" id="departmentUnit" value="Jigawa Command" disabled />
-//                 </div>
-//               </div>
-//               <div className={styles.halfWidthInput}>
-//                 <label htmlFor="rank">Rank <span className={styles.optional}>(optional)</span></label>
-//                 <div className={styles.inputWithIcon}>
-//                   <span className={styles.inputIconText}>⭐</span>
-//                   <input type="text" id="rank" value="Inspector" disabled />
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className={styles.formGroup}>
-//               <label htmlFor="password">Password *</label>
-//               <div className={styles.inputWithIcon}>
-//                 <span className={styles.inputIconText}>🔒</span>
-//                 <input type="password" id="password" value="............" />
-//                 <button type="button" className={styles.passwordToggle}>
-//                   👁️
-//                 </button>
-//               </div>
-//               <p className={styles.passwordHint}>Medium — add symbols or numbers to strengthen</p>
-//             </div>
-
-//             <button type="submit" className={styles.submitButton}>
-//               SUBMIT FOR DEPARTMENTAL VERIFICATION
-//             </button>
-//           </form>
-
-//           <p className={styles.signinFooter}>
-//             Already registered? <a href="#" className={styles.signinLink}>Sign in</a>
-//           </p>
-//         </div>
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default OfficerRegistration;
-
 import React, { useState } from 'react';
 import styles from './OfficerRegistrationPage.module.css';
 import { authService } from '../../api/authService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const OfficerRegistration = () => {
   const navigate = useNavigate();
@@ -241,18 +93,23 @@ const OfficerRegistration = () => {
       <header className={styles.header}>
         <div className={styles.logoSection}>
           <div className={styles.logoIcon}>
-            <div className={styles.logoInitial}>A</div>
+            <div className={styles.logoInitial}>
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="6.19394" fill="#00D4AA"/>
+            <path d="M21.1978 13.2325L26.7924 27.6581C27.0081 28.1821 27.2393 28.5597 27.4859 28.7909C27.7325 29.0066 27.956 29.1222 28.1563 29.1376V29.6C27.6015 29.5692 26.9542 29.5538 26.2144 29.5538C25.4746 29.5384 24.7195 29.5306 23.9489 29.5306C23.1628 29.5306 22.4231 29.5384 21.7295 29.5538C21.036 29.5538 20.4812 29.5692 20.065 29.6V29.1376C20.851 29.1068 21.3442 28.9758 21.5446 28.7446C21.7603 28.498 21.7141 27.9817 21.4059 27.1957L17.707 16.9545L18.1694 16.1453L14.9791 24.4447C14.5938 25.4465 14.3549 26.2556 14.2624 26.8721C14.1853 27.4731 14.2239 27.9355 14.378 28.2592C14.5321 28.5828 14.7787 28.8063 15.1178 28.9296C15.4568 29.0529 15.8576 29.1222 16.3199 29.1376V29.6C15.7497 29.5692 15.2334 29.5538 14.771 29.5538C14.3241 29.5384 13.8309 29.5306 13.2915 29.5306C12.9986 29.5306 12.6827 29.5384 12.3436 29.5538C12.02 29.5538 11.7425 29.5692 11.5114 29.6V29.1376C11.8658 29.076 12.2126 28.8525 12.5517 28.4672C12.9062 28.0665 13.2683 27.3884 13.6382 26.4328L18.7704 13.2325C19.1403 13.2633 19.541 13.2787 19.9726 13.2787C20.4195 13.2787 20.8279 13.2633 21.1978 13.2325ZM22.0069 22.942V23.4044H15.1178L15.349 22.942H22.0069Z" fill="#0A0F1E"/>
+          </svg>
+            </div>
           </div>
           <span className={styles.aegisText}>AEGIS</span>
         </div>
-        <div className={styles.navLinks}>
-          <a href="#" className={styles.backLink}>
+        {/* <div className={styles.navLinks}> */}
+          <a href="/select-role" className={styles.backLink}>
             <span className={styles.backArrow}>&larr;</span> BACK TO ROLE SELECT
           </a>
-          <button className={styles.signInButton} onClick={() => navigate('/officer/sign-in')}>
+          <Link className={styles.signInButton} to="/sign-in" state={{ role: "officer" }}>
             SIGN IN
-          </button>
-        </div>
+          </Link>
+        {/* </div> */}
       </header>
 
       <main className={styles.mainContent}>
@@ -261,7 +118,7 @@ const OfficerRegistration = () => {
             <div className={styles.line}></div>
             <span className={styles.taglineText}>OFFICER REGISTRATION</span>
           </div>
-          <h1 className={styles.sidebarTitle}>Register credentials.</h1>
+          <h1 className={styles.sidebarTitle}>Register{" "} <p>credentials.</p></h1>
           <p className={styles.sidebarDescription}>
             Registration requires your official badge credentials. Access is granted only after departmental verification — 24 to 48 hours.
           </p>
@@ -269,7 +126,18 @@ const OfficerRegistration = () => {
           <div className={styles.featureList}>
             <div className={styles.featureItem}>
               <div className={styles.featureIcon}>
-                <span className={styles.featureIconText}>🕒</span>
+                <span className={styles.featureIconText}>
+                  <svg width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_341_1773)">
+                  <path d="M5.6875 0C4.56262 0 3.463 0.333566 2.5277 0.958517C1.59239 1.58347 0.863411 2.47173 0.432938 3.51099C0.00246431 4.55024 -0.110167 5.69381 0.109286 6.79708C0.32874 7.90034 0.870422 8.91376 1.66583 9.70917C2.46124 10.5046 3.47466 11.0463 4.57793 11.2657C5.68119 11.4852 6.82476 11.3725 7.86401 10.9421C8.90327 10.5116 9.79154 9.78261 10.4165 8.84731C11.0414 7.912 11.375 6.81238 11.375 5.6875C11.3734 4.17957 10.7737 2.73386 9.70741 1.66759C8.64115 0.601321 7.19543 0.0015924 5.6875 0ZM8.75 6.125H5.6875C5.57147 6.125 5.46019 6.07891 5.37814 5.99686C5.2961 5.91481 5.25 5.80353 5.25 5.6875V2.625C5.25 2.50897 5.2961 2.39769 5.37814 2.31564C5.46019 2.23359 5.57147 2.1875 5.6875 2.1875C5.80353 2.1875 5.91481 2.23359 5.99686 2.31564C6.07891 2.39769 6.125 2.50897 6.125 2.625V5.25H8.75C8.86603 5.25 8.97731 5.29609 9.05936 5.37814C9.14141 5.46019 9.1875 5.57147 9.1875 5.6875C9.1875 5.80353 9.14141 5.91481 9.05936 5.99686C8.97731 6.07891 8.86603 6.125 8.75 6.125Z" fill="#F59E0B"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_341_1773">
+                  <rect width="11.375" height="11.375" fill="white"/>
+                  </clipPath>
+                  </defs>
+                  </svg>
+                </span>
               </div>
               <div className={styles.featureContent}>
                 <h3 className={styles.featureTitle}>24-48 Hour Verification</h3>
@@ -278,7 +146,20 @@ const OfficerRegistration = () => {
             </div>
             <div className={styles.featureItem}>
               <div className={styles.featureIcon}>
-                <span className={styles.featureIconText}>✉️</span>
+                <span className={styles.featureIconText}>
+                  <svg width="17" height="14" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_341_1779)">
+                    <path d="M13.2222 0H0.777778C0.563002 0 0.368558 0.0870567 0.227803 0.227803C0.0870567 0.368558 0 0.563002 0 0.777778V10.1111C0 10.5407 0.348227 10.8889 0.777778 10.8889H13.2222C13.6518 10.8889 14 10.5407 14 10.1111V0.777778C14 0.563002 13.913 0.368558 13.7722 0.227803C13.6314 0.0870567 13.437 0 13.2222 0Z" fill="#F59E0B" stroke="#0A0F1E" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M0.227783 0.227539L5.90005 5.89976C6.50749 6.50728 7.49247 6.50728 8.09991 5.89976L13.7722 0.227539" fill="#F59E0B"/>
+                    <path d="M0.227783 0.227539L5.90005 5.89976C6.50749 6.50728 7.49247 6.50728 8.09991 5.89976L13.7722 0.227539" stroke="#0A0F1E" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_341_1779">
+                    <rect width="14" height="10.8889" fill="white"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+                </span>
               </div>
               <div className={styles.featureContent}>
                 <h3 className={styles.featureTitle}>Official Email Required</h3>
@@ -287,7 +168,18 @@ const OfficerRegistration = () => {
             </div>
             <div className={styles.featureItem}>
               <div className={styles.featureIcon}>
-                <span className={styles.featureIconText}>🔒</span>
+                <span className={styles.featureIconText}>
+                  <svg width="15" height="16" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_341_1787)">
+                  <path d="M9.625 3.9375H7.875V2.625C7.875 1.92881 7.59844 1.26113 7.10616 0.768845C6.61387 0.276562 5.94619 0 5.25 0C4.55381 0 3.88613 0.276562 3.39384 0.768845C2.90156 1.26113 2.625 1.92881 2.625 2.625V3.9375H0.875C0.642936 3.9375 0.420376 4.02969 0.256282 4.19378C0.0921872 4.35788 0 4.58044 0 4.8125V10.9375C0 11.1696 0.0921872 11.3921 0.256282 11.5562C0.420376 11.7203 0.642936 11.8125 0.875 11.8125H9.625C9.85706 11.8125 10.0796 11.7203 10.2437 11.5562C10.4078 11.3921 10.5 11.1696 10.5 10.9375V4.8125C10.5 4.58044 10.4078 4.35788 10.2437 4.19378C10.0796 4.02969 9.85706 3.9375 9.625 3.9375ZM5.6875 8.23758V9.625C5.6875 9.74103 5.64141 9.85231 5.55936 9.93436C5.47731 10.0164 5.36603 10.0625 5.25 10.0625C5.13397 10.0625 5.02269 10.0164 4.94064 9.93436C4.85859 9.85231 4.8125 9.74103 4.8125 9.625V8.23758C4.52059 8.13437 4.27457 7.9313 4.11791 7.66424C3.96125 7.39719 3.90405 7.08335 3.9564 6.77819C4.00876 6.47304 4.16731 6.19622 4.40402 5.99666C4.64074 5.79709 4.94039 5.68764 5.25 5.68764C5.55961 5.68764 5.85926 5.79709 6.09598 5.99666C6.33269 6.19622 6.49124 6.47304 6.5436 6.77819C6.59595 7.08335 6.53875 7.39719 6.38209 7.66424C6.22543 7.9313 5.97941 8.13437 5.6875 8.23758ZM7 3.9375H3.5V2.625C3.5 2.16087 3.68437 1.71575 4.01256 1.38756C4.34075 1.05937 4.78587 0.875 5.25 0.875C5.71413 0.875 6.15925 1.05937 6.48744 1.38756C6.81563 1.71575 7 2.16087 7 2.625V3.9375Z" fill="#F59E0B"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_341_1787">
+                  <rect width="10.5" height="11.8125" fill="white"/>
+                  </clipPath>
+                  </defs>
+                  </svg>
+                </span>
               </div>
               <div className={styles.featureContent}>
                 <h3 className={styles.featureTitle}>Secure Credentialing</h3>
@@ -320,9 +212,13 @@ const OfficerRegistration = () => {
             {/* First Name & Last Name */}
             <div className={styles.formGroup}>
               <div className={styles.halfWidthInput}>
-                <label htmlFor="firstName">First Name *</label>
+                <label htmlFor="firstName">First Name <p>*</p></label>
                 <div className={styles.inputWithIcon}>
-                  <span className={styles.inputIconText}>👤</span>
+                  <span className={styles.inputIconText}>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.79492 0.0283203C6.66737 0.0283203 7.516 0.314041 8.20996 0.842773C8.9039 1.37158 9.40522 2.1139 9.63672 2.95508C9.86817 3.79635 9.81701 4.69057 9.49121 5.5C9.1654 6.30943 8.58275 6.98921 7.83301 7.43555L7.78027 7.46777L7.83887 7.48633C9.35854 7.9829 10.6605 9.0308 11.5059 10.4922C11.5426 10.5557 11.5624 10.6278 11.5625 10.7012C11.5626 10.7745 11.5434 10.8466 11.5068 10.9102C11.4701 10.9736 11.417 11.0258 11.3535 11.0625C11.29 11.0992 11.2179 11.1192 11.1445 11.1191H0.445312C0.372008 11.1191 0.299784 11.0992 0.236328 11.0625C0.173111 11.0259 0.12055 10.9734 0.0839844 10.9102C0.0473997 10.8467 0.0283512 10.7744 0.0283203 10.7012C0.0283391 10.6279 0.0473461 10.5557 0.0839844 10.4922C0.929267 9.03084 2.2314 7.98295 3.75098 7.48633L3.80957 7.46777L3.75684 7.43555C3.00721 6.98921 2.42441 6.30934 2.09863 5.5C1.77288 4.6906 1.72168 3.79631 1.95312 2.95508C2.18461 2.11386 2.68592 1.37159 3.37988 0.842773C4.07384 0.313969 4.92245 0.0283579 5.79492 0.0283203Z" fill="#F59E0B" stroke="#0A0F1E" stroke-width="0.0557264"/>
+                    </svg>
+                  </span>
                   <input
                     type="text"
                     id="firstName"
@@ -333,9 +229,13 @@ const OfficerRegistration = () => {
                 </div>
               </div>
               <div className={styles.halfWidthInput}>
-                <label htmlFor="lastName">Last Name *</label>
+                <label htmlFor="lastName">Last Name <p>*</p></label>
                 <div className={styles.inputWithIcon}>
-                  <span className={styles.inputIconText}>👤</span>
+                  <span className={styles.inputIconText}>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.79492 0.0283203C6.66737 0.0283203 7.516 0.314041 8.20996 0.842773C8.9039 1.37158 9.40522 2.1139 9.63672 2.95508C9.86817 3.79635 9.81701 4.69057 9.49121 5.5C9.1654 6.30943 8.58275 6.98921 7.83301 7.43555L7.78027 7.46777L7.83887 7.48633C9.35854 7.9829 10.6605 9.0308 11.5059 10.4922C11.5426 10.5557 11.5624 10.6278 11.5625 10.7012C11.5626 10.7745 11.5434 10.8466 11.5068 10.9102C11.4701 10.9736 11.417 11.0258 11.3535 11.0625C11.29 11.0992 11.2179 11.1192 11.1445 11.1191H0.445312C0.372008 11.1191 0.299784 11.0992 0.236328 11.0625C0.173111 11.0259 0.12055 10.9734 0.0839844 10.9102C0.0473997 10.8467 0.0283512 10.7744 0.0283203 10.7012C0.0283391 10.6279 0.0473461 10.5557 0.0839844 10.4922C0.929267 9.03084 2.2314 7.98295 3.75098 7.48633L3.80957 7.46777L3.75684 7.43555C3.00721 6.98921 2.42441 6.30934 2.09863 5.5C1.77288 4.6906 1.72168 3.79631 1.95312 2.95508C2.18461 2.11386 2.68592 1.37159 3.37988 0.842773C4.07384 0.313969 4.92245 0.0283579 5.79492 0.0283203Z" fill="#F59E0B" stroke="#0A0F1E" stroke-width="0.0557264"/>
+                    </svg>
+                  </span>
                   <input
                     type="text"
                     id="lastName"
@@ -349,9 +249,13 @@ const OfficerRegistration = () => {
 
             {/* Badge Number */}
             <div className={styles.formGroup}>
-              <label htmlFor="badgeNumber">Badge / Service Number *</label>
-              <div className={`${styles.inputWithIcon} ${styles.inputActive}`}>
-                <span className={styles.inputIconText}>💳</span>
+              <label htmlFor="badgeNumber">Badge / Service Number <p>*</p></label>
+              <div className={`${styles.inputWithIcon}`}>
+                <span className={styles.inputIconText}>
+                  <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.875 6.25C6.875 6.49723 6.80169 6.7389 6.66434 6.94446C6.52699 7.15002 6.33176 7.31024 6.10335 7.40485C5.87495 7.49946 5.62361 7.52421 5.38114 7.47598C5.13866 7.42775 4.91593 7.3087 4.74112 7.13388C4.5663 6.95907 4.44725 6.73634 4.39902 6.49386C4.35079 6.25139 4.37554 6.00005 4.47015 5.77165C4.56476 5.54324 4.72498 5.34801 4.93054 5.21066C5.1361 5.07331 5.37777 5 5.625 5C5.95652 5 6.27446 5.1317 6.50888 5.36612C6.7433 5.60054 6.875 5.91848 6.875 6.25ZM16.25 1.25V12.5C16.25 12.8315 16.1183 13.1495 15.8839 13.3839C15.6495 13.6183 15.3315 13.75 15 13.75H1.25C0.918479 13.75 0.600537 13.6183 0.366116 13.3839C0.131696 13.1495 0 12.8315 0 12.5V1.25C0 0.918479 0.131696 0.600537 0.366116 0.366116C0.600537 0.131696 0.918479 0 1.25 0H15C15.3315 0 15.6495 0.131696 15.8839 0.366116C16.1183 0.600537 16.25 0.918479 16.25 1.25ZM8.73047 9.84375C8.52822 9.0886 8.04866 8.43747 7.3875 8.02031C7.73862 7.67128 7.9782 7.22585 8.07587 6.74049C8.17354 6.25513 8.1249 5.7517 7.93612 5.29402C7.74734 4.83634 7.42692 4.44501 7.01547 4.16965C6.60403 3.89429 6.12009 3.74729 5.625 3.74729C5.12991 3.74729 4.64597 3.89429 4.23453 4.16965C3.82308 4.44501 3.50266 4.83634 3.31388 5.29402C3.1251 5.7517 3.07646 6.25513 3.17413 6.74049C3.2718 7.22585 3.51138 7.67128 3.8625 8.02031C3.20176 8.43793 2.72234 9.08887 2.51953 9.84375C2.47809 10.0043 2.50214 10.1748 2.58638 10.3176C2.67063 10.4605 2.80817 10.564 2.96875 10.6055C3.12933 10.6469 3.2998 10.6229 3.44265 10.5386C3.5855 10.4544 3.68903 10.3168 3.73047 10.1562C3.93672 9.35547 4.75078 8.75 5.625 8.75C6.49922 8.75 7.31406 9.35391 7.51953 10.1562C7.56097 10.3168 7.6645 10.4544 7.80735 10.5386C7.9502 10.6229 8.12067 10.6469 8.28125 10.6055C8.44183 10.564 8.57937 10.4605 8.66362 10.3176C8.74786 10.1748 8.77191 10.0043 8.73047 9.84375ZM13.75 8.125C13.75 7.95924 13.6842 7.80027 13.5669 7.68306C13.4497 7.56585 13.2908 7.5 13.125 7.5H10C9.83424 7.5 9.67527 7.56585 9.55806 7.68306C9.44085 7.80027 9.375 7.95924 9.375 8.125C9.375 8.29076 9.44085 8.44973 9.55806 8.56694C9.67527 8.68415 9.83424 8.75 10 8.75H13.125C13.2908 8.75 13.4497 8.68415 13.5669 8.56694C13.6842 8.44973 13.75 8.29076 13.75 8.125ZM13.75 5.625C13.75 5.45924 13.6842 5.30027 13.5669 5.18306C13.4497 5.06585 13.2908 5 13.125 5H10C9.83424 5 9.67527 5.06585 9.55806 5.18306C9.44085 5.30027 9.375 5.45924 9.375 5.625C9.375 5.79076 9.44085 5.94973 9.55806 6.06694C9.67527 6.18415 9.83424 6.25 10 6.25H13.125C13.2908 6.25 13.4497 6.18415 13.5669 6.06694C13.6842 5.94973 13.75 5.79076 13.75 5.625Z" fill="#F59E0B"/>
+                  </svg>
+                </span>
                 <input
                   type="text"
                   id="badgeNumber"
@@ -364,9 +268,22 @@ const OfficerRegistration = () => {
 
             {/* Official Email */}
             <div className={styles.formGroup}>
-              <label htmlFor="officialEmail">Official Email *</label>
+              <label htmlFor="officialEmail">Official Email <p>*</p></label>
               <div className={styles.inputWithIcon}>
-                <span className={styles.inputIconText}>✉️</span>
+                <span className={styles.inputIconText}>
+                  <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_341_1834)">
+                  <path d="M13.2222 0H0.777778C0.563002 0 0.368558 0.0870567 0.227803 0.227803C0.0870567 0.368558 0 0.563002 0 0.777778V10.1111C0 10.5407 0.348227 10.8889 0.777778 10.8889H13.2222C13.6518 10.8889 14 10.5407 14 10.1111V0.777778C14 0.563002 13.913 0.368558 13.7722 0.227803C13.6314 0.0870567 13.437 0 13.2222 0Z" fill="#F59E0B" stroke="#0A0F1E" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M0.227783 0.227539L5.90005 5.89976C6.50749 6.50728 7.49247 6.50728 8.09991 5.89976L13.7722 0.227539" fill="#F59E0B"/>
+                  <path d="M0.227783 0.227539L5.90005 5.89976C6.50749 6.50728 7.49247 6.50728 8.09991 5.89976L13.7722 0.227539" stroke="#0A0F1E" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_341_1834">
+                  <rect width="14" height="10.8889" fill="white"/>
+                  </clipPath>
+                  </defs>
+                  </svg>
+                </span>
                 <input
                   type="email"
                   id="officialEmail"
@@ -380,9 +297,13 @@ const OfficerRegistration = () => {
             {/* Department & Rank */}
             <div className={styles.formGroup}>
               <div className={styles.halfWidthInput}>
-                <label htmlFor="departmentUnit">Department / Unit *</label>
+                <label htmlFor="departmentUnit">Department / Unit <p>*</p></label>
                 <div className={styles.inputWithIcon}>
-                  <span className={styles.inputIconText}>🏛️</span>
+                  <span className={styles.inputIconText}>
+                    <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 11.5003C15 11.6329 14.9473 11.7601 14.8536 11.8539C14.7598 11.9476 14.6326 12.0003 14.5 12.0003H0.5C0.367392 12.0003 0.240215 11.9476 0.146447 11.8539C0.0526784 11.7601 0 11.6329 0 11.5003C0 11.3677 0.0526784 11.2405 0.146447 11.1468C0.240215 11.053 0.367392 11.0003 0.5 11.0003H14.5C14.6326 11.0003 14.7598 11.053 14.8536 11.1468C14.9473 11.2405 15 11.3677 15 11.5003ZM0.51875 4.63656C0.489011 4.53171 0.494349 4.42001 0.53395 4.31846C0.573552 4.21692 0.645248 4.1311 0.738125 4.07406L7.23812 0.074064C7.31689 0.0256378 7.40754 0 7.5 0C7.59246 0 7.68311 0.0256378 7.76188 0.074064L14.2619 4.07406C14.3548 4.13103 14.4265 4.21679 14.4662 4.31829C14.5059 4.41979 14.5113 4.53148 14.4817 4.63634C14.452 4.74121 14.3889 4.83352 14.302 4.89923C14.215 4.96493 14.109 5.00043 14 5.00031H12.5V9.00031H13.5C13.6326 9.00031 13.7598 9.05299 13.8536 9.14676C13.9473 9.24053 14 9.36771 14 9.50031C14 9.63292 13.9473 9.7601 13.8536 9.85387C13.7598 9.94764 13.6326 10.0003 13.5 10.0003H1.5C1.36739 10.0003 1.24021 9.94764 1.14645 9.85387C1.05268 9.7601 1 9.63292 1 9.50031C1 9.36771 1.05268 9.24053 1.14645 9.14676C1.24021 9.05299 1.36739 9.00031 1.5 9.00031H2.5V5.00031H1C0.891118 5.00035 0.785199 4.96485 0.698338 4.89919C0.611477 4.83354 0.54842 4.74133 0.51875 4.63656ZM8.5 8.50031C8.5 8.63292 8.55268 8.7601 8.64645 8.85387C8.74021 8.94764 8.86739 9.00031 9 9.00031C9.13261 9.00031 9.25979 8.94764 9.35355 8.85387C9.44732 8.7601 9.5 8.63292 9.5 8.50031V5.50031C9.5 5.36771 9.44732 5.24053 9.35355 5.14676C9.25979 5.05299 9.13261 5.00031 9 5.00031C8.86739 5.00031 8.74021 5.05299 8.64645 5.14676C8.55268 5.24053 8.5 5.36771 8.5 5.50031V8.50031ZM5.5 8.50031C5.5 8.63292 5.55268 8.7601 5.64645 8.85387C5.74021 8.94764 5.86739 9.00031 6 9.00031C6.13261 9.00031 6.25979 8.94764 6.35355 8.85387C6.44732 8.7601 6.5 8.63292 6.5 8.50031V5.50031C6.5 5.36771 6.44732 5.24053 6.35355 5.14676C6.25979 5.05299 6.13261 5.00031 6 5.00031C5.86739 5.00031 5.74021 5.05299 5.64645 5.14676C5.55268 5.24053 5.5 5.36771 5.5 5.50031V8.50031Z" fill="#F59E0B"/>
+                    </svg>
+                  </span>
                   <input
                     type="text"
                     id="departmentUnit"
@@ -393,9 +314,13 @@ const OfficerRegistration = () => {
                 </div>
               </div>
               <div className={styles.halfWidthInput}>
-                <label htmlFor="rank">Rank <span className={styles.optional}>(optional)</span></label>
+                <label htmlFor="rank">Rank <p id={styles.optional}>(optional)</p></label>
                 <div className={styles.inputWithIcon}>
-                  <span className={styles.inputIconText}>⭐</span>
+                  <span className={styles.inputIconText}>
+                    <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.7867 5.79132L10.15 8.06652L10.9533 11.4691C10.9977 11.6538 10.9862 11.8475 10.9205 12.0257C10.8548 12.2039 10.7378 12.3587 10.5842 12.4704C10.4305 12.5821 10.2473 12.6458 10.0575 12.6534C9.86766 12.6611 9.67986 12.6123 9.51779 12.5132L6.5588 10.6921L3.59806 12.5132C3.43601 12.6117 3.24843 12.66 3.05896 12.6521C2.86949 12.6442 2.68659 12.5805 2.53329 12.4688C2.38 12.3572 2.26316 12.2027 2.1975 12.0248C2.13183 11.8469 2.12027 11.6535 2.16427 11.4691L2.97052 8.06652L0.333801 5.79132C0.190421 5.66741 0.0867262 5.50399 0.0356661 5.32149C-0.0153939 5.13899 -0.0115559 4.94549 0.0467008 4.76515C0.104958 4.58482 0.215051 4.42565 0.363232 4.30751C0.511414 4.18937 0.691115 4.11751 0.879895 4.10089L4.33693 3.82199L5.67052 0.594645C5.7427 0.418757 5.86556 0.268306 6.02347 0.162421C6.18138 0.0565364 6.36721 0 6.55734 0C6.74746 0 6.93329 0.0565364 7.0912 0.162421C7.24911 0.268306 7.37197 0.418757 7.44415 0.594645L8.77716 3.82199L12.2342 4.10089C12.4233 4.11689 12.6036 4.18835 12.7523 4.30633C12.901 4.4243 13.0116 4.58354 13.0702 4.76409C13.1289 4.94464 13.1329 5.13848 13.0818 5.32131C13.0308 5.50415 12.9269 5.66785 12.7832 5.79191L12.7867 5.79132Z" fill="#F59E0B"/>
+                    </svg>
+                  </span>
                   <input
                     type="text"
                     id="rank"
@@ -409,9 +334,13 @@ const OfficerRegistration = () => {
 
             {/* Password */}
             <div className={styles.formGroup}>
-              <label htmlFor="password">Password *</label>
+              <label htmlFor="password">Password <p>*</p></label>
               <div className={styles.inputWithIcon}>
-                <span className={styles.inputIconText}>🔒</span>
+                <span className={styles.inputIconText}>
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.46973 0.708008C6.35229 0.16693 7.39189 -0.0613312 8.41992 0.0605469C9.44794 0.182498 10.4052 0.647374 11.1367 1.37988C11.7806 2.02368 12.2186 2.84437 12.3965 3.7373C12.5744 4.63027 12.4837 5.55604 12.1357 6.39746C11.7878 7.23873 11.1988 7.95834 10.4424 8.46484C9.68578 8.97139 8.79528 9.24206 7.88477 9.24316H7.87988C7.39558 9.24391 6.91369 9.16834 6.45312 9.01855L6.43555 9.0127L6.42285 9.02539L5.86914 9.58008C5.82886 9.62023 5.78107 9.65208 5.72852 9.67383C5.67577 9.69564 5.6186 9.70708 5.56152 9.70703H4.60645V10.6631C4.60637 10.7782 4.5599 10.8883 4.47852 10.9697C4.39712 11.0511 4.28698 11.0976 4.17188 11.0977H3.21582V12.0537C3.21571 12.1688 3.16929 12.279 3.08789 12.3604C3.00647 12.4417 2.89637 12.4882 2.78125 12.4883H0.926758C0.688674 12.4882 0.460348 12.393 0.291992 12.2246C0.123653 12.0562 0.0293052 11.828 0.0292969 11.5898V9.92773C0.0289203 9.80988 0.0515669 9.69286 0.0966797 9.58398C0.141837 9.47509 0.208316 9.37601 0.291992 9.29297L3.50391 6.08105L3.49902 6.06445C3.17778 5.08016 3.19711 4.01563 3.55469 3.04395C3.9123 2.07239 4.58716 1.24921 5.46973 0.708008ZM8.85156 2.54102C8.66618 2.57792 8.49596 2.66907 8.3623 2.80273C8.22864 2.9364 8.13748 3.1066 8.10059 3.29199C8.0637 3.47743 8.08292 3.67005 8.15527 3.84473C8.22762 4.01919 8.34982 4.16847 8.50684 4.27344C8.66401 4.37846 8.84906 4.43455 9.03809 4.43457C9.29161 4.43457 9.53459 4.33356 9.71387 4.1543C9.89315 3.97502 9.99414 3.73205 9.99414 3.47852C9.99412 3.28947 9.93803 3.10445 9.83301 2.94727C9.72804 2.79024 9.57877 2.66805 9.4043 2.5957C9.22962 2.52335 9.037 2.50413 8.85156 2.54102Z" fill="#F59E0B" stroke="#0A0F1E" stroke-width="0.0579372"/>
+                  </svg>
+                </span>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
@@ -424,7 +353,15 @@ const OfficerRegistration = () => {
                   className={styles.passwordToggle}
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? (
+                        <svg width="17" height="9" viewBox="0 0 17 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.7534 5.46398C16.815 5.57088 16.8549 5.68886 16.8709 5.81119C16.8868 5.93351 16.8785 6.05778 16.8465 6.1769C16.8144 6.29602 16.7592 6.40766 16.684 6.50544C16.6088 6.60322 16.515 6.68523 16.4081 6.74679C16.3012 6.80835 16.1832 6.84824 16.0609 6.86421C15.9386 6.88017 15.8143 6.87188 15.6952 6.83981C15.5761 6.80775 15.4644 6.75253 15.3667 6.67732C15.2689 6.60211 15.1869 6.50838 15.1253 6.40148L13.8081 4.09679C13.0731 4.55915 12.2807 4.92319 11.4511 5.1796L11.8644 7.65148C11.905 7.89669 11.8466 8.14801 11.702 8.35018C11.5574 8.55235 11.3385 8.68883 11.0933 8.7296C11.0417 8.73878 10.9894 8.74323 10.937 8.74288C10.7156 8.74266 10.5015 8.66409 10.3325 8.5211C10.1634 8.37811 10.0505 8.17992 10.0136 7.96163L9.61125 5.55538C8.83082 5.64184 8.04324 5.64184 7.26281 5.55538L6.86437 7.96398C6.82743 8.18253 6.71425 8.38093 6.54491 8.52395C6.37557 8.66698 6.16103 8.74537 5.93937 8.74523C5.887 8.74557 5.83469 8.74113 5.78312 8.73195C5.66169 8.7115 5.54548 8.66733 5.44113 8.60196C5.33677 8.53658 5.24631 8.4513 5.17493 8.35096C5.10354 8.25063 5.05261 8.13721 5.02507 8.01719C4.99752 7.89717 4.99389 7.7729 5.01437 7.65148L5.42766 5.17335C4.59805 4.91694 3.80562 4.5529 3.07062 4.09054L1.75344 6.40148C1.69188 6.50838 1.60987 6.60211 1.51209 6.67732C1.41431 6.75253 1.30267 6.80775 1.18355 6.83981C1.06443 6.87188 0.940158 6.88017 0.817834 6.86421C0.695511 6.84824 0.577529 6.80835 0.470625 6.74679C0.36372 6.68523 0.269987 6.60322 0.194778 6.50544C0.119568 6.40766 0.0643543 6.29602 0.0322891 6.1769C0.000223878 6.05778 -0.008065 5.93351 0.00789591 5.81119C0.0238568 5.68886 0.0637549 5.57088 0.125312 5.46398L1.56437 2.95226C1.07669 2.51173 0.624507 2.03342 0.212031 1.52179C0.0664386 1.32761 0.00182583 1.08453 0.0317826 0.843683C0.0617394 0.602838 0.183931 0.382996 0.372657 0.230396C0.561382 0.0777969 0.801933 0.00433319 1.04371 0.0254578C1.28549 0.0465823 1.50966 0.160648 1.66906 0.343664C2.92219 1.89523 5.11437 3.74523 8.43937 3.74523C11.7644 3.74523 13.9566 1.89523 15.2097 0.343664C15.3665 0.152089 15.5927 0.0303233 15.839 0.00494243C16.0853 -0.0204385 16.3316 0.0526259 16.5242 0.20819C16.7168 0.363754 16.84 0.589187 16.867 0.835288C16.894 1.08139 16.8226 1.32818 16.6683 1.52179C16.2553 2.03348 15.8026 2.51179 15.3144 2.95226L16.7534 5.46398Z" fill="#F9FAFB"/>
+                        </svg>
+                    ) : (
+                      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.299 6.18203C19.2701 6.11875 18.5857 4.59922 17.074 3.0875C15.0514 1.06797 12.5021 0 9.68964 0C6.87714 0 4.32792 1.06797 2.30761 3.0875C0.795888 4.59922 0.111513 6.11875 0.0802628 6.18203C0.0273355 6.30203 0 6.43174 0 6.56289C0 6.69404 0.0273355 6.82375 0.0802628 6.94375C0.109169 7.00781 0.793544 8.52656 2.30604 10.0383C4.32792 12.0578 6.87714 13.125 9.68964 13.125C12.5021 13.125 15.0514 12.0578 17.0709 10.0383C18.5834 8.52656 19.2678 7.00781 19.2967 6.94375C19.35 6.82392 19.3777 6.69429 19.3781 6.56314C19.3785 6.43199 19.3516 6.30219 19.299 6.18203ZM15.7006 8.76016C14.0232 10.4117 12.0014 11.25 9.68964 11.25C7.37792 11.25 5.35604 10.4117 3.68104 8.75937C3.02197 8.10718 2.45501 7.36807 1.99589 6.5625C2.45516 5.75726 3.0221 5.01842 3.68104 4.36641C5.35683 2.71328 7.37792 1.875 9.68964 1.875C12.0014 1.875 14.0225 2.71328 15.6982 4.36641C16.3573 5.01836 16.9242 5.75721 17.3834 6.5625C16.9242 7.36801 16.3572 8.10712 15.6982 8.75937L15.7006 8.76016ZM9.68964 3.125C9.00976 3.125 8.34516 3.32661 7.77987 3.70432C7.21457 4.08204 6.77398 4.6189 6.5138 5.24703C6.25363 5.87515 6.18555 6.56631 6.31819 7.23312C6.45083 7.89993 6.77822 8.51244 7.25896 8.99318C7.7397 9.47392 8.35221 9.80131 9.01901 9.93395C9.68582 10.0666 10.377 9.99851 11.0051 9.73834C11.6332 9.47816 12.1701 9.03757 12.5478 8.47227C12.9255 7.90698 13.1271 7.24237 13.1271 6.5625C13.1261 5.65114 12.7636 4.77739 12.1192 4.13296C11.4747 3.48853 10.601 3.12603 9.68964 3.125ZM9.68964 8.125C9.3806 8.125 9.07851 8.03336 8.82156 7.86167C8.56461 7.68998 8.36434 7.44595 8.24608 7.16044C8.12781 6.87493 8.09687 6.56077 8.15716 6.25767C8.21745 5.95458 8.36626 5.67617 8.58478 5.45765C8.8033 5.23913 9.08171 5.09031 9.38481 5.03002C9.6879 4.96973 10.0021 5.00068 10.2876 5.11894C10.5731 5.2372 10.8171 5.43747 10.9888 5.69442C11.1605 5.95137 11.2521 6.25347 11.2521 6.5625C11.2521 6.9769 11.0875 7.37433 10.7945 7.66735C10.5015 7.96038 10.104 8.125 9.68964 8.125Z" fill="#F9FAFB"/>
+                      </svg>
+                    )}
                 </button>
               </div>
               <p className={styles.passwordHint}>
@@ -449,7 +386,7 @@ const OfficerRegistration = () => {
 
           <p className={styles.signinFooter}>
             Already registered?{' '}
-            <a href="/officer/sign-in" className={styles.signinLink}>Sign in</a>
+            <Link to="/sign-in" state={{ role: "officer" }} className={styles.signinLink}>Sign in</Link>
           </p>
         </div>
       </main>
