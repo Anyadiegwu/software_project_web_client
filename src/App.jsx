@@ -8,6 +8,7 @@ import CreateAccount from "./pages/AuthPage/ReporterRegisterPage";
 import OfficerRegistration from "./pages/AuthPage/OfficerRegistrationPage";
 // import OfficerAuthPage from "./pages/AuthPage/OfficerAuthPage"; 
 import { AuthProvider } from "./context/AuthContext";
+import OfficerMain from "./pages/officerPages/OfficerMain";
 
 export default function App() {
   return (
@@ -20,9 +21,8 @@ export default function App() {
           {/* <Route path="/reporter/sign-in" element={<AuthPage />} />
           <Route path="/officer/sign-in" element={<OfficerAuthPage />} /> */}
           <Route path="/officer/sign-up" element={<OfficerRegistration />} />
-          {/* <Route path="/reporter/sign-in" element={<AuthPage defaultRole="reporter" />} />
-          <Route path="/officer/sign-in"  element={<AuthPage defaultRole="officer" />} /> */}
           <Route path="/sign-in" element={<AuthPage />} />
+          <Route path="/officer/dashboard" element={<OfficerMain />} />
         </Routes>
       </Router>
     </AuthProvider>

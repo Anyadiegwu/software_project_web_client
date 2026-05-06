@@ -204,3 +204,13 @@
 }
 
 }
+
+.modalMode {
+  min-height: unset;
+  padding: 40px;
+}
+
+.pageMode {
+  min-height: 100vh;
+  padding: 60px 40px;
+}
