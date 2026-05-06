@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function AegisRoleSelect({ onClose }) {
 
-  // If onClose is passed → it's being used as a modal
-  // If no onClose → it's a standalone page (navigated via <a href>)
+
   const isModal = typeof onClose === "function";
 
   const handleClose = () => {
