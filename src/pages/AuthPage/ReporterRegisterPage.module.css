@@ -1,0 +1,567 @@
+/* ============================================================ ROOT */
+.container {
+  min-height: 100vh;
+  background: var(--color-blue-8, rgba(10, 15, 30, 1));
+  color: #e5e7eb;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-bottom: 1px solid #0f172a;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.logoText {
+  color: #14b8a6;
+  letter-spacing: 2px;
+  font-family: DM Mono;
+  font-weight: font weight/400;
+  font-style: Regular;
+  font-size: 13.6px;
+  line-height: line height/22_44;
+  letter-spacing: letter spacing/2_04;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+.backLink {
+  text-decoration: none;
+  color: var(--color-grey-46, #6B7280);
+  font-size: 12px;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0.72px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.backLink:hover {
+  color: #e5e7eb;
+}
+
+.signInBtn {
+  text-decoration: none;
+  width: 75px;
+  height: 34px;
+  border-radius: 2px;
+  text-align: center;
+  border-width: 1px;
+  opacity: 1;
+  border: 1px solid #FFFFFF12;
+  color: var(--color-grey-91, #E5E7EB);
+  font-family: DM Mono;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.9px;
+  line-height: 3;
+  letter-spacing: 1.09;
+  vertical-align: middle;
+  text-transform: uppercase;
+
+}
+
+.signInBtn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  background: #1e2937;
+}
+
+/* ============================================================ MAIN LAYOUT */
+.mainContent {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  flex: 1;
+  min-height: calc(100vh - 65px);
+}
+
+/* ============================================================ LEFT PANEL */
+.leftPanel {
+  padding: 60px 40px;
+  background: linear-gradient(163.52deg, #0D1526 0%, #161F35 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Subtle teal glow bottom-left */
+.leftPanel::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 212, 170, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.createAccountHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.createAccountHeader::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: #00d4aa;
+  flex-shrink: 0;
+}
+
+.step {
+  color: var(--color-cyan-42, #00D4AA);
+  font-family: DM Mono;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 9.9px;
+  line-height: 100%;
+  letter-spacing: 1.98px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: Playfair Display;
+  font-weight: 900;
+  font-style: Black;
+  font-size: 36.8px;
+  line-height: 41.22px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  margin: 0 0 20px;
+  color: var(--color-grey-98, #F9FAFB);
+  letter-spacing: -0.5px;
+  max-width: 300px;
+}
+
+.highlight {
+  color:  var(--color-cyan-42, #00D4AA);
+}
+
+.subtitle {
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 13.4px;
+  line-height: 22.85px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: var(--color-azure-65, #9CA3AF);
+  margin: 0 0 48px;
+  max-width: 280px;
+}
+
+/* ============================================================ BENEFITS */
+.benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--color-azure-15, #161F35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 16px 18px;
+  transition: border-color 0.2s;
+}
+
+.benefitItem:hover {
+  border-color: rgba(0, 212, 170, 0.2);
+}
+
+.icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.benefitTitle {
+  margin-bottom: 4px;
+  color: var(--color-grey-98, #F9FAFB);
+  font-family: DM Sans;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12.2px;
+  line-height: 17.63px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  }
+
+.benefitDesc {
+  color: var(--color-azure-65, #9CA3AF);
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.7px;
+  line-height: 16.94px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+/* ============================================================ RIGHT PANEL */
+.rightPanel {
+  background: var(--color-blue-8, #0A0F1E);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 80px;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 720px;
+}
+
+/* ============================================================ FORM HEADER */
+.formHeader {
+  margin-bottom: 36px;
+}
+
+.newAccount {
+  color: var(--color-grey-46, #6B7280);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
+  font-family: DM Mono;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 9.6px;
+  line-height: 100%;
+  letter-spacing: 1.54px;
+}
+
+.formTitle {
+  margin: 0;
+  font-family: Playfair Display;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 27.2px;
+  line-height: 32.64px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: var(--color-grey-98, #F9FAFB);
+}
+
+/* ============================================================ FORM */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-grey-91, #E5E7EB);
+  font-family: DM Sans;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 11.8px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.optional {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-grey-46, #6B7280);
+  font-weight: 300;
+  font-style: Light;
+  font-size: 10.6px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.required {
+  color: #00d4aa;
+  font-size: 13px;
+}
+
+/* Base input shared styles */
+.input {
+  width: 100%;
+  background: #141c2b;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #e8f0ee;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.input::placeholder {
+  color: var(--color-grey-46, #6B7280);
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 13.4px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.input:focus {
+  border-color: #00d4aa;
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.08);
+  outline: none;
+}
+.inputE {
+  width: 100%;
+  background: #141c2b;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #e8f0ee;
+  border: none;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.inputE::placeholder {
+  color: var(--color-grey-98, #F9FAFB);
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 13.4px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.inputE:focus {
+  outline: none;
+}
+
+/* ============================================================ INPUT WRAPPERS */
+.inputWrapper,
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #141c2b;
+  border: 1px solid #00d4aa;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  border: 1px solid var(--color-white-11, #FFFFFF1C);
+}
+
+.inputWrapper:focus-within,
+.passwordWrapper:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+  border: 1px solid var(--color-cyan-42, #00D4AA)
+}
+
+.inputWrapper .input,
+.passwordWrapper .input {
+  border: none;
+  background: transparent;
+  padding-left: 12px;
+  box-shadow: none;
+}
+
+.inputWrapper .input:focus,
+.passwordWrapper .input:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.inputIcon {
+  font-size: 14px;
+  padding-left: 14px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.eyeIcon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 14px;
+  flex-shrink: 0;
+  color: #556660;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.eyeIcon:hover {
+  color: #00d4aa;
+}
+
+/* ============================================================ HELPER TEXT */
+.helperText {
+  color: var(--color-grey-46, #6B7280);
+  margin: 0;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 10.1px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+/* ============================================================ PASSWORD STRENGTH */
+.passwordStrength {
+  font-size: 11px;
+  color: #00d4aa;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* ============================================================ TERMS */
+.terms {
+  margin-top: -4px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  gap: 5px;
+  color: var(--color-grey-46, #6B7280);
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.7px;
+  line-height: 17.5px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+.checkboxLabel input[type="checkbox"] {
+  accent-color: #00D4AA; 
+  cursor: pointer;
+}
+.checkboxLabel input[type='checkbox']:not(:checked) {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.link {
+  color: #00d4aa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link:hover {
+  color: #00b5a0;
+}
+
+/* ============================================================ SUBMIT BUTTON */
+.createButton {
+  width: 100%;
+  background: var(--color-cyan-42, #00D4AA);
+  color: var(--color-blue-8, #0A0F1E);
+  padding: 18px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: inherit;
+  margin-top: 4px;
+  font-family: DM Sans;
+  font-weight: 600;
+  font-style: SemiBold;
+  font-size: 13.8px;
+  line-height: 100%;
+  letter-spacing: 0.41px;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.createButton:hover:not(:disabled) {
+  background: #00b5a0;
+  transform: translateY(-1px);
+}
+
+.createButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================ SIGN IN LINK */
+.signInLink {
+  color: #6b8080;
+  text-align: center;
+  margin: 0;
+  font-family: DM Sans;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11.8px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.signInLink a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ============================================================ RESPONSIVE */
+@media (max-width: 1024px) {
+  .mainContent {
+    grid-template-columns: 320px 1fr;
+  }
+
+  .rightPanel {
+    padding: 48px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+  }
+
+  .leftPanel {
+    padding: 40px 24px;
+  }
+
+  .rightPanel {
+    padding: 40px 24px;
+  }
+
+  .header {
+    padding: 16px 20px;
+  }
+
+  .backLink {
+    display: none;
+  }
+}

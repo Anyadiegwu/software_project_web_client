@@ -1,0 +1,300 @@
+/* ============================================================ SIDEBAR */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: 100vh;
+  /* background: #0d1117; */
+  background: var(--color-azure-10, #0D1526);
+  border-bottom: 1px solid var(--color-azure-6010, #3B82F61A);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ============================================================ BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 20px 20px;
+  flex-shrink: 0;
+}
+
+.brandLogo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brandInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.brandName {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: #f9fafb;
+  letter-spacing: 2px;
+}
+
+.brandSub {
+  font-size: 11px;
+  color: #6b7280;
+  letter-spacing: 0.3px;
+}
+
+/* ============================================================ PROFILE */
+.profile {
+  display: flex;
+  align-items: center;
+  width: inherit;
+  gap: 12px;
+  padding: 16px 20px;
+  /* margin: 0 12px; */
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  /* border-radius: 10px; */
+  flex-shrink: 0;
+}
+
+.profileAvatar {
+  width: 40px;
+  height: 40px;
+  background: #3b82f6;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.profileName {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #f9fafb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profileRole {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--color-azure-60, #3B82F6);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  /* margin-top: 5px; */
+}
+
+/* ============================================================ DIVIDER */
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 16px 0 8px;
+  flex-shrink: 0;
+}
+
+/* ============================================================ NAV */
+.nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
+}
+
+.navSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navSectionLabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  color: #4b5563;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  padding: 0 10px;
+  margin-bottom: 6px;
+}
+
+/* ── Nav Item ── */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  color: #6b7280;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 12.8px;
+  font-weight: 400;
+  letter-spacing: 0.1px;
+  transition: background 0.15s ease, color 0.15s ease;
+  position: relative;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e5e7eb;
+}
+
+.navItem:hover .navIcon {
+  color: #f59e0b;
+}
+
+/* ── Active state ── */
+.navItemActive {
+  background: rgba(245, 158, 11, 0.08);
+  color: #f9fafb;
+}
+
+.navItemActive .navIcon {
+  color: #f59e0b;
+}
+
+.navItemActive::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 18px;
+  background: #f59e0b;
+  border-radius: 0 2px 2px 0;
+}
+
+.navIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4b5563;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.navLabel {
+  flex: 1;
+}
+
+/* ============================================================ BADGE */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+.badgeRed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.badgeAmber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.comingSoonTag {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  color: #00d19a;
+  background: rgba(0, 209, 154, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(0, 209, 154, 0.2);
+  flex-shrink: 0;
+}
+
+/* ============================================================ FOOTER */
+.footer {
+  padding: 16px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signOut {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #f59e0b;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  padding: 8px 4px;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.signOut:hover {
+  background: rgba(245, 158, 11, 0.06);
+  color: #fbbf24;
+}
+
+.footerVersion {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #374151;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
