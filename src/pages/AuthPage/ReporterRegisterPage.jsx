@@ -47,7 +47,7 @@ const CreateAccount = () => {
       console.log("Signup success:", res);
       alert("Account created successfully");
 
-      window.location.href = "/reporter/sign-in";
+      window.location.href = "/sign-in";
 
     } catch (err) {
       console.error(err);

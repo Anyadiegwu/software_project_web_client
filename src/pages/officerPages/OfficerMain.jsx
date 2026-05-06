@@ -53,7 +53,6 @@ import ComingSoon from "../ComingSoon";
 // import { AuthContext } from "../../context/AuthContext";
 import { useAuth } from "../../context/AuthContext";
 
-// const BASE_URL = "https://software-project-backend-api.onrender.com/api";
 const BASE_URL = "http://localhost:5000/api";
 
 const apiFetch = async (endpoint) => {
