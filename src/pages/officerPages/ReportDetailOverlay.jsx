@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styles from "./ReportDetailOverlay.module.css";
 
 const getToken = () => localStorage.getItem("token") || "";
-const BASE_URL = "http://localhost:5000/api";
-// const BASE_URL = import.meta.env.VITE_BASE_URL;
+// const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 export default function ReportDetailOverlay({
   report,
   officerInitials = "?",

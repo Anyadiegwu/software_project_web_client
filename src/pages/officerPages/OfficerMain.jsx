@@ -1,59 +1,12 @@
-// import React, { useState } from "react";
-// import styles from "./OfficerMain.module.css";
-// import OfficerSidebar from "./Officersidebar";
-// import OfficerDashboard from "./OfficerDashboard";
-
-// export default function OfficerMain() {
-//   const [sidebarOpen, setSidebarOpen] = useState(false);
-//   const [activePage, setActivePage] = useState("dashboard");
-
-//   const handleNavigate = (id) => {
-//     setActivePage(id);
-//     setSidebarOpen(false); // close sidebar on nav (mobile)
-//   };
-
-//   return (
-//     <div className={styles.officerMainWrapper}>
-
-//       {/* Overlay — mobile/tablet only */}
-//       {sidebarOpen && (
-//         <div
-//           className={`${styles.overlay} ${styles.overlayVisible}`}
-//           onClick={() => setSidebarOpen(false)}
-//         />
-//       )}
-
-//       {/* Sidebar */}
-//       <div
-//         className={`${styles.officerSidebar} ${sidebarOpen ? styles.officerSidebarOpen : ""}`}
-//       >
-//         <OfficerSidebar
-//           activeId={activePage}
-//           onNavigate={handleNavigate}
-//         />
-//       </div>
-
-//       {/* Main content */}
-//       <div className={styles.mainContent}>
-//         <OfficerDashboard
-//           officer={null}
-//           onMenuClick={() => setSidebarOpen(true)}
-//         />
-//       </div>
-
-//     </div>
-//   );
-// }
-
 import React, { useState, useEffect } from "react";
 import styles from "./OfficerMain.module.css";
 import OfficerSidebar from "./Officersidebar";
 import OfficerDashboard from "./OfficerDashboard";
 import ComingSoon from "../ComingSoon";
-// import { AuthContext } from "../../context/AuthContext";
 import { useAuth } from "../../context/AuthContext";
 
-const BASE_URL = "http://localhost:5000/api";
+// const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const apiFetch = async (endpoint) => {
   const token = localStorage.getItem("token");
