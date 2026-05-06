@@ -223,6 +223,7 @@ const navSections = [
       {
         id: "active-cases",
         label: "Active Cases",
+        comingSoon: true,
         badge: 7,
         badgeColor: "red",
         icon: (
@@ -234,6 +235,7 @@ const navSections = [
       {
         id: "incoming-reports",
         label: "Incoming Reports",
+        comingSoon: true,
         badge: 12,
         badgeColor: "red",
         icon: (
@@ -245,6 +247,7 @@ const navSections = [
       {
         id: "dispatch-centre",
         label: "Dispatch Centre",
+        comingSoon: true,
         badge: null,
         icon: (
           <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -255,6 +258,7 @@ const navSections = [
       {
         id: "live-incident-map",
         label: "Live Incident Map",
+        comingSoon: true,
         badge: null,
         icon: (
           <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -270,6 +274,7 @@ const navSections = [
       {
         id: "team-overview",
         label: "Team Overview",
+        comingSoon: true,
         badge: null,
         icon: (
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -280,6 +285,7 @@ const navSections = [
       {
         id: "performance-analytics",
         label: "Performance Analytics",
+        comingSoon: true,
         badge: null,
         icon: (
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -290,6 +296,7 @@ const navSections = [
       {
         id: "whistleblower-reports",
         label: "Whistleblower Reports",
+        comingSoon: true,
         badge: 2,
         badgeColor: "amber",
         icon: (
@@ -306,6 +313,7 @@ const navSections = [
       {
         id: "my-profile",
         label: "My Profile",
+        comingSoon: true,
         badge: null,
         icon: (
           <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -317,6 +325,7 @@ const navSections = [
       {
         id: "security-settings",
         label: "Security Settings",
+        comingSoon: true,
         badge: null,
         icon: (
           <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -327,6 +336,7 @@ const navSections = [
       {
         id: "help-support",
         label: "Help & Support",
+        comingSoon: true,
         badge: null,
         icon: (
           <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -358,9 +368,9 @@ const getDisplayName = (officer) => {
 export default function OfficerSidebar({ activeId, onNavigate, officer, onSignOut }) {
   const [active, setActive] = useState(activeId || "dashboard");
 
-  const handleNav = (id) => {
-    setActive(id);
-    if (onNavigate) onNavigate(id);
+  const handleNav = (item) => {
+    setActive(item.id);
+    if (onNavigate) onNavigate(item);
   };
 
   const handleSignOut = () => {
@@ -421,7 +431,10 @@ export default function OfficerSidebar({ activeId, onNavigate, officer, onSignOu
               >
                 <span className={styles.navIcon}>{item.icon}</span>
                 <span className={styles.navLabel}>{item.label}</span>
-                {item.badge && (
+                {item.comingSoon && (
+                  <span className={styles.comingSoonTag}>SOON</span>
+                )}
+                {item.badge && !item.comingSoon && (
                   <span className={`${styles.badge} ${item.badgeColor === "amber" ? styles.badgeAmber : styles.badgeRed}`}>
                     {item.badge}
                   </span>

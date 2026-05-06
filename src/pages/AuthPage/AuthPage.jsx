@@ -384,6 +384,7 @@ const ShieldIcon = () => (
    REPORTER FORM
 ───────────────────────────────────────────── */
 function ReporterForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -397,6 +398,7 @@ function ReporterForm() {
       setError("");
       const res = await authService.login("reporter", formData);
       loginUser(res, "reporter");
+      navigate("/reporter/portal");
     } catch (err) {
       setError(err.message || "Login failed");
     } finally {

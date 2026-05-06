@@ -9,6 +9,7 @@ import OfficerRegistration from "./pages/AuthPage/OfficerRegistrationPage";
 // import OfficerAuthPage from "./pages/AuthPage/OfficerAuthPage"; 
 import { AuthProvider } from "./context/AuthContext";
 import OfficerMain from "./pages/officerPages/OfficerMain";
+import ReporterPortal from "./pages/ReporterPortal";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/officer/sign-in" element={<OfficerAuthPage />} /> */}
           <Route path="/officer/sign-up" element={<OfficerRegistration />} />
           <Route path="/sign-in" element={<AuthPage />} />
+          <Route path="/reporter/portal" element={<ReporterPortal />} />
           <Route path="/officer/dashboard" element={<OfficerMain />} />
         </Routes>
       </Router>

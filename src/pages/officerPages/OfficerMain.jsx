@@ -49,6 +49,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./OfficerMain.module.css";
 import OfficerSidebar from "./Officersidebar";
 import OfficerDashboard from "./OfficerDashboard";
+import ComingSoon from "../ComingSoon";
 // import { AuthContext } from "../../context/AuthContext";
 import { useAuth } from "../../context/AuthContext";
 
@@ -91,6 +92,7 @@ export default function OfficerMain() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activePage, setActivePage] = useState("dashboard");
+  const [comingSoonItem, setComingSoonItem] = useState(null);
 
   // ── Data states ──
   const [officer, setOfficer] = useState(null);
@@ -196,8 +198,13 @@ export default function OfficerMain() {
   };
 
   // ── Navigate ──
-  const handleNavigate = (id) => {
-    setActivePage(id);
+  const handleNavigate = (item) => {
+    if (item.comingSoon) {
+      setComingSoonItem(item);
+    } else {
+      setComingSoonItem(null);
+    }
+    setActivePage(item.id);
     setSidebarOpen(false);
   };
 
@@ -276,17 +283,24 @@ export default function OfficerMain() {
 
       {/* Main content */}
       <div className={styles.mainContent}>
-        <OfficerDashboard
-          officer={officer}
-          notifications={notifications}
-          unreadCount={unreadCount}
-          assignedReports={assignedReports}
-          onMenuClick={() => setSidebarOpen(true)}
-          onMarkNotifRead={handleMarkNotifRead}
-          onMarkAllRead={handleMarkAllRead}
-          onStartReport={handleStartReport}
-          onResolveReport={handleResolveReport}
-        />
+        {comingSoonItem ? (
+          <ComingSoon 
+            featureName={comingSoonItem.label} 
+            onMenuClick={() => setSidebarOpen(true)} 
+          />
+        ) : (
+          <OfficerDashboard
+            officer={officer}
+            notifications={notifications}
+            unreadCount={unreadCount}
+            assignedReports={assignedReports}
+            onMenuClick={() => setSidebarOpen(true)}
+            onMarkNotifRead={handleMarkNotifRead}
+            onMarkAllRead={handleMarkAllRead}
+            onStartReport={handleStartReport}
+            onResolveReport={handleResolveReport}
+          />
+        )}
       </div>
 
     </div>
