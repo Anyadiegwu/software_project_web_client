@@ -10,6 +10,7 @@ import OfficerRegistration from "./pages/AuthPage/OfficerRegistrationPage";
 import { AuthProvider } from "./context/AuthContext";
 import OfficerMain from "./pages/officerPages/OfficerMain";
 import ReporterPortal from "./pages/ReporterPortal";
+import EmailVerification from "./pages/EmailVerification";
 
 export default function App() {
   return (
@@ -25,6 +26,8 @@ export default function App() {
           <Route path="/sign-in" element={<AuthPage />} />
           <Route path="/reporter/portal" element={<ReporterPortal />} />
           <Route path="/officer/dashboard" element={<OfficerMain />} />
+
+          <Route path="/verify-email" element={<EmailVerification />} />
         </Routes>
       </Router>
     </AuthProvider>

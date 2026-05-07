@@ -47,7 +47,8 @@ const CreateAccount = () => {
       console.log("Signup success:", res);
       alert("Account created successfully");
 
-      window.location.href = "/sign-in";
+      // window.location.href = "/sign-in";
+      navigate("/verify-email", { state: { email: formData.email } });
 
     } catch (err) {
       console.error(err);

@@ -76,9 +76,10 @@ const OfficerRegistration = () => {
       });
 
       // Redirect to login after short delay
-      setTimeout(() => {
-        navigate('/officer/sign-in');
-      }, 3000);
+      // setTimeout(() => {
+      //   // navigate('/officer/sign-in');
+      // }, 3000);
+      navigate("/verify-email", { state: { email: formData.email } });
 
     } catch (err) {
       console.error(err);

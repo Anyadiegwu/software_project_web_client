@@ -1,0 +1,323 @@
+.container {
+  min-height: 100vh;
+  background-color: #0b111d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  background: rgba(17, 24, 39, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 48px 40px;
+  text-align: center;
+  z-index: 10;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Icon ring ── */
+.iconRing {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(0, 209, 154, 0.12);
+  border: 1px solid rgba(0, 209, 154, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+/* ── Typography ── */
+.title {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+.sub {
+  font-size: 15px;
+  color: #9ca3af;
+  line-height: 1.6;
+  margin: 0 0 8px;
+}
+
+/* ── Email pill ── */
+.emailPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 209, 154, 0.10);
+  border: 1px solid rgba(0, 209, 154, 0.2);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #00d19a;
+  margin: 0 0 28px;
+  word-break: break-all;
+}
+
+/* ── Toast ── */
+.toast {
+  font-size: 13px;
+  color: #00d19a;
+  background: rgba(0, 209, 154, 0.10);
+  border: 1px solid rgba(0, 209, 154, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Email input ── */
+.inputGroup {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.label {
+  font-size: 13px;
+  color: #9ca3af;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.emailField {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: inherit;
+}
+
+.emailField::placeholder {
+  color: #4b5563;
+}
+
+.emailField:focus {
+  border-color: #00d19a;
+  background: rgba(0, 209, 154, 0.04);
+}
+
+/* ── OTP inputs ── */
+.otpRow {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.otpInput {
+  width: 52px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  caret-color: #00d19a;
+  font-family: inherit;
+}
+
+.otpInput:focus {
+  border-color: #00d19a;
+  background: rgba(0, 209, 154, 0.06);
+}
+
+.otpInput.filled {
+  border-color: rgba(0, 209, 154, 0.5);
+}
+
+.otpInput.inputError {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.06);
+}
+
+/* ── Error ── */
+.error {
+  color: #ef4444;
+  font-size: 13px;
+  margin: 0 0 14px;
+  text-align: left;
+}
+
+/* ── Primary button ── */
+.btn {
+  width: 100%;
+  background: #00d19a;
+  color: #0b111d;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s, transform 0.15s;
+  margin-bottom: 20px;
+  font-family: inherit;
+}
+
+.btn:hover:not(:disabled) {
+  background: #00f0ae;
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  background: rgba(0, 209, 154, 0.35);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Resend row ── */
+.resendText {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.resendLink {
+  color: #00d19a;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 13px;
+  padding: 0;
+  text-decoration: underline;
+  font-family: inherit;
+}
+
+.resendLink:disabled {
+  color: #6b7280;
+  text-decoration: none;
+  cursor: default;
+}
+
+/* ── Divider & footer ── */
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 24px 0;
+}
+
+.footer {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.backBtn {
+  color: #00d19a;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+  font-family: inherit;
+}
+
+/* ── Success ── */
+.successWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.successRing {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(0, 209, 154, 0.12);
+  border: 1px solid rgba(0, 209, 154, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+/* ── Spinner keyframe ── */
+@keyframes ve-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Background decorations ── */
+.bgDecoration {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.glow1 {
+  position: absolute;
+  top: -10%; right: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0, 209, 154, 0.08) 0%, transparent 70%);
+  filter: blur(60px);
+}
+
+.glow2 {
+  position: absolute;
+  bottom: -10%; left: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+  filter: blur(80px);
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .card {
+    padding: 32px 24px;
+    border-radius: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: none;
+  }
+
+  .otpInput {
+    width: 44px;
+    height: 52px;
+    font-size: 20px;
+  }
+
+  .otpRow {
+    gap: 7px;
+  }
+}
