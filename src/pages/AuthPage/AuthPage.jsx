@@ -51,19 +51,23 @@ function ReporterForm() {
   const { loginUser } = useAuth();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      setError("");
-      const res = await authService.login("reporter", formData);
-      loginUser(res, "reporter");
-      navigate("/reporter/portal");
-    } catch (err) {
-      setError(err.message || "Login failed");
-    } finally {
-      setLoading(false);
+  e.preventDefault();
+  try {
+    setLoading(true);
+    setError("");
+    const res = await authService.login("reporter", formData);
+    loginUser(res, "reporter");
+    navigate("/reporter/portal");
+  } catch (err) {
+    if (err.message === "Please verify your email first") {
+      navigate("/verify-email", { state: { email: formData.email, role: "reporter" } });
+      return;
     }
-  };
+    setError(err.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>
@@ -157,24 +161,27 @@ function OfficerForm() {
     setError("");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!formData.identifier || !formData.password) {
-      setError("Please enter your email (or badge number) and password.");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!formData.identifier || !formData.password) {
+    setError("Please enter your email (or badge number) and password.");
+    return;
+  }
+  try {
+    setLoading(true);
+    const res = await authService.login("security", formData);
+    loginUser(res, "security");
+    navigate("/officer/dashboard");
+  } catch (err) {
+    if (err.message === "Please verify your email first") {
+      navigate("/verify-email", { state: { email: formData.identifier, role: "security" } });
       return;
     }
-    try {
-      setLoading(true);
-      const res = await authService.login("security", formData);
-      loginUser(res, "security");
-      navigate("/officer/dashboard");
-    } catch (err) {
-      setError(err.message || "Login failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+    setError(err.message || "Login failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <>
       <div className={styles.alertBox}>
