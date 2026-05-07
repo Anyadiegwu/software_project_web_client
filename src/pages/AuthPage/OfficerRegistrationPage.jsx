@@ -79,7 +79,7 @@ const OfficerRegistration = () => {
       // setTimeout(() => {
       //   // navigate('/officer/sign-in');
       // }, 3000);
-      navigate("/verify-email", { state: { email: formData.email } });
+      navigate("/verify-email", { state: { email: formData.officialEmail } });
 
     } catch (err) {
       console.error(err);
