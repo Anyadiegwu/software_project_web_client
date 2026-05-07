@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styles from "./EmailVerification.module.css";
 
 // const BASE_URL = "http://localhost:5000"; // 🔧 Change to your backend URL
-const BASE_URL = import.meta.env.VITE_BASE_URL; // 🔧 Change to your backend URL
-
+// const BASE_URL = import.meta.env.VITE_BASE_URL; // 🔧 Change to your backend URL
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const EmailVerification = () => {
   const navigate = useNavigate();
 
@@ -43,6 +43,8 @@ const EmailVerification = () => {
 
   // ── STEP 1: Send OTP ─────────────────────────────────────────
   const handleSendOtp = async () => {
+console.log(BASE_URL)
+
     setEmailError("");
     const trimmed = email.trim();
 
@@ -53,7 +55,7 @@ const EmailVerification = () => {
 
     setLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/api/auth/resend-otp`, {
+      const res = await fetch(`${BASE_URL}/auth/resend-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: trimmed }),
