@@ -43,7 +43,7 @@ const EmailVerification = () => {
 
   // ── STEP 1: Send OTP ─────────────────────────────────────────
   const handleSendOtp = async () => {
-console.log(BASE_URL)
+// console.log(BASE_URL)
 
     setEmailError("");
     const trimmed = email.trim();
@@ -58,7 +58,7 @@ console.log(BASE_URL)
       const res = await fetch(`${BASE_URL}/auth/resend-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: trimmed }),
+        body: JSON.stringify({ email }),
       });
 
       const data = await res.json();
