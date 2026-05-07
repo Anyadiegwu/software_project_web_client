@@ -350,7 +350,7 @@
 }
 
 .inputE::placeholder {
-  color: var(--color-grey-98, #F9FAFB);
+  color: var(--color-grey-46, #6B7280);
   font-family: DM Sans;
   font-weight: 400;
   font-style: Regular;
