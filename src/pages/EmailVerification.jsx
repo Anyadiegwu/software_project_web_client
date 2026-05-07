@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./EmailVerification.module.css";
 
-const BASE_URL = "http://localhost:5000"; // 🔧 Change to your backend URL
-// const BASE_URL = import.meta.env.VITE_BASE_URL; // 🔧 Change to your backend URL
+// const BASE_URL = "http://localhost:5000"; // 🔧 Change to your backend URL
+const BASE_URL = import.meta.env.VITE_BASE_URL; // 🔧 Change to your backend URL
 
 const EmailVerification = () => {
   const navigate = useNavigate();
