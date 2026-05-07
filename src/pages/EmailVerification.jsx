@@ -86,7 +86,7 @@ console.log(BASE_URL)
     setLoading(true);
     try {
       // 1. Verify the OTP
-      const res = await fetch(`${BASE_URL}/api/auth/verify-otp`, {
+      const res = await fetch(`${BASE_URL}/auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), otp: code }),
@@ -107,7 +107,7 @@ console.log(BASE_URL)
 
       if (token) {
         try {
-          const profileRes = await fetch(`${BASE_URL}/api/user/me`, {
+          const profileRes = await fetch(`${BASE_URL}/user/me`, {
             headers: { Authorization: `Bearer ${token}` },
           });
 
@@ -144,7 +144,7 @@ console.log(BASE_URL)
   const handleResend = async () => {
     setOtpError("");
     try {
-      const res = await fetch(`${BASE_URL}/api/auth/resend-otp`, {
+      const res = await fetch(`${BASE_URL}/auth/resend-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim() }),
